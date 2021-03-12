@@ -44,7 +44,6 @@ class MyAccountPage extends Component {
                             id: banner.id
                         });
                     }
-                    console.log(banners);
                     if (banners.length > 0) {
                         this.setState({
                             adv_banner: [...banners]

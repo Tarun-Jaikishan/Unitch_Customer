@@ -17,6 +17,8 @@ export const API_SETTING = {
 export const BOUQUET_BASE = 1;
 export const BOUQUET_ADDONS = 2;
 export const BOUQUET_ALACARTE = 3;
+export const OPEN_TICKET = 2;
+export const CLOSED_TICKET = 3;
 
 export const USER_AUTH_TOKEN = "user_auth_token";
 export const USER_TOKEN = "user_token";

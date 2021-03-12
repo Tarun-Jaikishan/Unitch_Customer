@@ -9,8 +9,7 @@ const AccountList = ({ index, account }) => {
     return (
         <div className="card mt-3">
             <div className="card-header">
-                <div className="card-title">Account {index + 1}
-                </div>
+                <div className="card-title">Account {index + 1}</div>
                 <div className="btn-list text-right" style={{ width: '70%' }}>
                     <Button variant="primary" className="btn btn-outline-primary" onClick={() => history.push({
                         pathname: '/myaccount/renewal',
@@ -22,8 +21,16 @@ const AccountList = ({ index, account }) => {
                         search: '',
                         state: { account_id: account.id }
                     })} >Addons</Button>}{' '}
-                    {account.outstanding > 0 && <Button variant="primary" size="lg">Payment</Button>}
-
+                    <Button variant="primary" className="pull-right" onClick={() => history.push({
+                        pathname: '/myaccount/tickets',
+                        search: '',
+                        state: { account_id: account.id }
+                    })} >Tickets</Button>
+                    <Button variant="primary" className="pull-right" onClick={() => history.push({
+                        pathname: '/myaccount/ledger',
+                        search: '',
+                        state: { account_id: account.id, smartcardno: account.smartcardno, stbno: account.stbno }
+                    })} >Ledger</Button>
                 </div>
             </div>
             <div className="card-body">

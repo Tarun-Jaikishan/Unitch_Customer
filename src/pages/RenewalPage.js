@@ -8,7 +8,7 @@ import { ArrowRight } from 'react-bootstrap-icons';
 import { history } from '../utilits';
 
 class RenewalPage extends Component {
- 
+
     componentDidMount() {
         console.log("Location state", this.props.location.state);
         if (this.props.location.state.bouquet_ids !== undefined) {
@@ -52,7 +52,7 @@ class RenewalPage extends Component {
                         title="Alacarte Bouquet"
                     />
                 }
-            </>)
+            </>);
         }
 
         return (
