@@ -1,14 +1,15 @@
 var Configs = {
-    COMPANY_NAME: "Efficiense",
-    COMPANY_ADDRESS: "G-247, Rd Number 5, Sanjay Gandhi Nagar, Indraprastha Industrial Area, Kota, Rajasthan 324005",
-    CRM_MOBILE_NO: "07446617401",
-    CRM_SUPPORT_NO: "07446617475",
-    SUPPORT_EMAIL: "support@radinet.in",
-    API_URL: 'http://103.133.120.36/api/index.php/v1/',
+    COMPANY_NAME: "JPR",
+    COMPANY_ADDRESS: "JPR Network Pvt. Ltd. 204-205 Nirmal Industrial Estate,Sion, Mumbai – 400022",
+    CRM_MOBILE_NO: "1800 266 9598",
+    CRM_SUPPORT_NO: "1800 266 9598",
+    COMPANY_LOGO : "https://www.jprnetwork.net/files/logo.png",
+    SUPPORT_EMAIL: "helpdesk@jprnetwork.net",
+    API_URL: 'https://api.jprnetworksms.net/v1/',
     AUTH_KEY: 'xqibzknznwb29de15s44',
-    USERNAME: "mso",
-    PASSWORD: 'jprdanmsp@897',
-    ONLINE_PAYMENT_URL: "http://103.133.120.36/portal/index.php?r=/portal/online-pay/checkout",
-    PAYMENT_RETURN_URL: "http://localhost:3000/myaccount"
+    USERNAME: "jpr",
+    PASSWORD: 'jprdanmsp',
+    ONLINE_PAYMENT_URL: "https://jprnetworksms.net/portal/index.php?r=/portal/online-pay/checkout",
+    PAYMENT_RETURN_URL: "http://efficience-portal.surge.sh/myaccount"
 };
 

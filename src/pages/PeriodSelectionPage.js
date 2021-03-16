@@ -19,9 +19,7 @@ class PeriodSelectionPage extends Component {
     }
 
     componentDidMount() {
-        console.log("Period location state", this.props.location.state);
         if (this.props.location.state.bouquet_ids !== undefined && this.props.location.state.account_id !== undefined) {
-            console.log('Location state', this.props.location.state);
             const url = `recharge-period/${this.props.location.state.bouquet_ids.join("-")}/mview`;
             const reqData = { account_id: this.props.location.state.account_id };
             const token = isTokenValid(USER_TOKEN);
@@ -32,31 +30,27 @@ class PeriodSelectionPage extends Component {
                         const d = resp.data.data;
                         if (d[0]) {
                             const data = Object.values(d[0]);
-                            console.log("api data", data)
                             this.setState({
                                 period_list: [...data]
                             })
                         }
                     }).catch(err => {
                         if (err) {
-                            console.log(err);
-                            // if(err.response.data.status === 422){
-                            //     this.setState({
-                            //         is_error: true,
-                            //         error_message: err.response.data.data.message
-                            //     });
-                            // }
+                            if (err.response.status === 422) {
+                                this.setState({
+                                    is_error: true,
+                                    error_message: err.response.data.data.message.join(" ")
+                                })
+                            }
                         }
                     });
             }
         } else {
-            console.log("wqlkanlkqsanlqsa");
             history.push('/myaccount');
         }
     }
 
     handleOnChange = (e) => {
-        console.log('reacharge period selected', e.target.value);
         this.setState({
             rperiod_id: e.target.value
         })

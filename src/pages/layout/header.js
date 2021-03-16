@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../resouces/images/logo/logo.png'
 import { SITE_SETTING } from '../../env.conf';
 import LogoutPage from '../LogoutPage';
 
@@ -9,7 +8,7 @@ const Header = (props) => (
         <div className="container">
             <div className="d-flex">
                 <Link className="header-brand" to="/">
-                    <img className="header-brand-img" src={Logo} alt={SITE_SETTING.company_name} />
+                    <img className="header-brand-img" src={SITE_SETTING.company_logo} alt={SITE_SETTING.company_name} />
                 </Link>
                 <div className="d-flex order-lg-2 ml-auto">
                     {

@@ -3,7 +3,8 @@ export const SITE_SETTING = {
     company_name: window.Configs.COMPANY_NAME,
     company_address: window.Configs.COMPANY_ADDRESS,
     company_contact: { crm: window.Configs.CRM_MOBILE_NO, supp: window.Configs.CRM_SUPPORT_NO },
-    company_email: window.Configs.SUPPORT_EMAIL
+    company_email: window.Configs.SUPPORT_EMAIL,
+    company_logo : window.Configs.COMPANY_LOGO
 };
 
 
