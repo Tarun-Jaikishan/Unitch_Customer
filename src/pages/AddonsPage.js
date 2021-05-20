@@ -6,6 +6,7 @@ import * as action from '../redux/action/index';
 import { connect } from 'react-redux';
 import { ArrowRight } from 'react-bootstrap-icons';
 import { history } from '../utilits';
+import Alert from 'react-bootstrap/Alert'
 
 class AddonsPage extends Component {
 
@@ -18,6 +19,16 @@ class AddonsPage extends Component {
 
     handleBouquetList = (id, type) => {
         this.props.addSelectedBouquet(id, type);
+    }
+
+    handleSubmit = () => {
+        if (this.props.bouquet_id.length > 0) {
+            history.push({
+                pathname: '/myaccount/period',
+                search: '',
+                state: { bouquet_ids: this.props.bouquet_id, account_id: this.props.account_id, type: "addon" }
+            })
+        }
     }
 
     render() {
@@ -49,14 +60,15 @@ class AddonsPage extends Component {
                 <div className="page-header">
                     <h1 className="page-title">Addons</h1>
                 </div>
+                { this.props.bouquet_id.length === 0 &&
+                    (<Alert variant="danger">
+                        Please select atleast one bouquet.
+                    </Alert>)}
+
                 <div className="row">
                     {content}
                     <div className="floating-btn">
-                        <Button variant="primary" onClick={() => history.push({
-                            pathname: '/myaccount/period',
-                            search: '',
-                            state: { bouquet_ids: this.props.bouquet_id, account_id: this.props.account_id, type: "addon" }
-                        })} > Next <ArrowRight /> </Button>
+                        <Button variant="primary" onClick={() => this.handleSubmit()} > Next <ArrowRight /> </Button>
                     </div>
                 </div>
             </div >

@@ -6,6 +6,7 @@ import * as action from '../redux/action/index';
 import { connect } from 'react-redux';
 import { ArrowRight } from 'react-bootstrap-icons';
 import { history } from '../utilits';
+import Alert from 'react-bootstrap/Alert'
 
 class RenewalPage extends Component {
 
@@ -20,11 +21,19 @@ class RenewalPage extends Component {
         this.props.addSelectedBouquet(id, type);
     }
 
+    handleSubmit = () => {
+        if (this.props.bouquet_id.length > 0 ) {
+            history.push({
+                pathname: '/myaccount/period',
+                search: '',
+                state: { bouquet_ids: this.props.bouquet_id, account_id: this.props.account_id, type: "renewal" }
+            });
+        }
+    }
+
 
     render() {
         let content = <SpinnerLoading />;
-        console.log("Redus props data", this.props.bouquets, this.props.bouquet_id);
-
         if (this.props.bouquets) {
             content = (<>
                 {this.props.bouquets.base.length > 0 &&
@@ -60,14 +69,15 @@ class RenewalPage extends Component {
                 <div className="page-header">
                     <h1 className="page-title">Renew Account</h1>
                 </div>
+                { this.props.bouquet_id.length === 0 &&
+                    (<Alert variant="danger">
+                        Please select atleast one bouquet to renew.
+                    </Alert>)}
+
                 <div className="row">
                     {content}
                     <div className="floating-btn">
-                        <Button variant="primary" onClick={() => history.push({
-                            pathname: '/myaccount/period',
-                            search: '',
-                            state: { bouquet_ids: this.props.bouquet_id, account_id: this.props.account_id, type: "renewal" }
-                        })} > Next <ArrowRight /> </Button>
+                        <Button variant="primary" onClick={() => this.handleSubmit()} > Next <ArrowRight /> </Button>
                     </div>
                 </div>
             </div >

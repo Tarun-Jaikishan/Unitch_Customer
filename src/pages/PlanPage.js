@@ -36,7 +36,6 @@ class PlanPage extends Component {
             modalShow: true
         });
 
-        console.log('openchannel list',this.state);
     };
 
     setModalShow = () => {

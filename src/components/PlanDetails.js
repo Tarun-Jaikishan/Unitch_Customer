@@ -4,6 +4,7 @@ import Spinner from './Spinner';
 import PopupModal from './PopupModal';
 import BlockContent from './BlockContent';
 import { RemoveTokens } from '../utilits';
+import { Accordion } from 'react-bootstrap';
 
 
 class PlanDetails extends Component {
@@ -68,6 +69,8 @@ class PlanDetails extends Component {
             content = this.state.channels.map(({ genre_id, genre_name, channel_list }) => {
                 return <BlockContent key={genre_id} channel_list={channel_list} genre_id={genre_id} genre_name={genre_name} />
             });
+
+            content = <Accordion>{content}</Accordion>
         }
 
         return (
