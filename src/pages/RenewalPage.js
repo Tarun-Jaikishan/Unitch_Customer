@@ -11,9 +11,28 @@ import Alert from 'react-bootstrap/Alert'
 class RenewalPage extends Component {
 
     componentDidMount() {
-        console.log("Location state", this.props.location.state);
-        if (this.props.location.state.bouquet_ids !== undefined) {
-            this.props.fetchBouquets(this.props.location.state.bouquet_ids, this.props.location.state.account_id);
+        let account_id;
+        let bouquet_ids;
+
+        if (this.props.match !== undefined) {
+            if (this.props.match.params.account_id) {
+                account_id = this.props.match.params.account_id;
+            }
+
+            if (this.props.match.params.bouque_ids) {
+                bouquet_ids = this.props.match.params.bouque_ids.split(',');
+            }
+        } else if (this.props.location.state !== undefined) {
+            if (this.props.location.state.bouquet_ids !== undefined) {
+                bouquet_ids = this.props.location.state.bouquet_ids.split(',');
+            }
+            if (this.props.location.state.account_id !== undefined) {
+                account_id = this.props.location.state.account_id;
+            }
+        }
+        
+        if (account_id && bouquet_ids) {
+            this.props.fetchBouquets(bouquet_ids, account_id);
         }
     }
 
@@ -22,9 +41,10 @@ class RenewalPage extends Component {
     }
 
     handleSubmit = () => {
-        if (this.props.bouquet_id.length > 0 ) {
+        if (this.props.bouquet_id.length > 0) {
             history.push({
-                pathname: '/myaccount/period',
+                pathname: `/myaccount/period/${this.props.account_id}/${this.props.bouquet_id}/renewal`,
+                hash: "#",
                 search: '',
                 state: { bouquet_ids: this.props.bouquet_id, account_id: this.props.account_id, type: "renewal" }
             });
@@ -69,7 +89,7 @@ class RenewalPage extends Component {
                 <div className="page-header">
                     <h1 className="page-title">Renew Account</h1>
                 </div>
-                { this.props.bouquet_id.length === 0 &&
+                {this.props.bouquet_id.length === 0 &&
                     (<Alert variant="danger">
                         Please select atleast one bouquet to renew.
                     </Alert>)}

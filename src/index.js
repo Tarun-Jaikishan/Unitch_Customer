@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import thunk from "redux-thunk";
-import { Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { history } from './utilits';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
@@ -28,9 +28,9 @@ const store = createStore(rootReducer, composeEnhancers(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
+    <HashRouter history={history}>
       <Routes />
-    </Router>
+    </HashRouter>
   </Provider>
   ,
   document.getElementById('root')

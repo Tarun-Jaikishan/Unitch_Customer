@@ -12,22 +12,26 @@ const AccountList = ({ index, account }) => {
                 <div className="card-title">Account {index + 1}</div>
                 <div className="btn-list text-right" style={{ width: '70%' }}>
                     <Button variant="primary" className="btn btn-outline-primary" onClick={() => history.push({
-                        pathname: '/myaccount/renewal',
+                        pathname: `/myaccount/renewal/${account.id}/${bouquet_ids}`,
+                        hash: "#",
                         search: '',
                         state: { bouquet_ids: bouquet_ids, account_id: account.id }
                     })} >Renew</Button> {' '}
                     {account.status !== -2 && <Button variant="primary" className="pull-right" onClick={() => history.push({
-                        pathname: '/myaccount/addons',
+                        pathname: `/myaccount/addons/${account.id}`,
+                        hash: "#",
                         search: '',
                         state: { account_id: account.id }
                     })} >Addons</Button>}{' '}
                     <Button variant="primary" className="pull-right" onClick={() => history.push({
-                        pathname: '/myaccount/tickets',
+                        pathname: `/myaccount/tickets/${account.id}`,
+                        hash: "#",
                         search: '',
                         state: { account_id: account.id }
                     })} >Tickets</Button>
                     <Button variant="primary" className="pull-right" onClick={() => history.push({
-                        pathname: '/myaccount/ledger',
+                        pathname: `/myaccount/ledger/${account.id}/${account.smartcardno}/${account.stbno}`,
+                        hash: "#",
                         search: '',
                         state: { account_id: account.id, smartcardno: account.smartcardno, stbno: account.stbno }
                     })} >Ledger</Button>

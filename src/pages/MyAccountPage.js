@@ -26,7 +26,6 @@ class MyAccountPage extends Component {
 
     advertiseBanner = () => {
         const token = isTokenValid(USER_TOKEN);
-        console.log("App Advertising token", token);
         if (token) {
             const url = `app-advertisement-banner`;
             const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey }

@@ -41,7 +41,6 @@ export const authFail = (error) => {
 export const autoLogin = () => {
     return dispatch => {
         const token = isTokenValid(USER_AUTH_TOKEN);
-        console.log("Is token valid", token);
         if (token) {
             dispatch(authStart());
             const authData = {
@@ -72,12 +71,16 @@ const setToken = (response, dispatch) => {
         mobile_no: data.mobile_no,
         is_customer: true
     };
-    console.log("Set token called", user_data, data.access_token, [USER_TOKEN, USER_DETAILS_STORAGE])
+    // console.log("Set token called", user_data, data.access_token, [USER_TOKEN, USER_DETAILS_STORAGE])
     localStorage.setItem(USER_TOKEN, JSON.stringify({ token: data.access_token, time: new Date() }));
     localStorage.setItem(USER_DETAILS_STORAGE, JSON.stringify(user_data));
     localStorage.setItem(USER_AUTH_TOKEN, JSON.stringify({ token: data.auth_token, time: new Date() }));
     dispatch(authSuccess(data.access_token, user_data));
-    history.push('/myaccount');
+    const url = history.location.pathname !== '/' ? history.location.pathname : "/myaccount"
+    history.push({
+        pathname: url,
+        hash: "#"
+    });
 }
 
 export const auth = (username = '', password = '', isUserSignin = false) => {

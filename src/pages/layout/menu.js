@@ -1,10 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import HomePage from '../HomePage';
-import AboutPage from '../AboutPage';
 import PlanPage from '../PlanPage';
-import ServicePage from '../ServicePage';
-import ContactPage from '../ContactPage'
 
 export const MENU_LIST = {
     non_login: [

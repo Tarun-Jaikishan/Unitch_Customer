@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { extApi } from '../axios';
 import { FormErrorDisplay, history, isTokenValid } from '../utilits';
 import { Button, Alert } from 'react-bootstrap';
-import { USER_AUTH_TOKEN, API_SETTING } from '../env.conf';
+import { EXT_TOKEN, API_SETTING } from '../env.conf';
 
 class RegisterPage extends Component {
 
@@ -48,9 +48,11 @@ class RegisterPage extends Component {
         if (this.state.form.customer_id.value && this.state.form.box_no.value) {
             const url = "/webcustomer/send-otp";
             const request = { "customer_detail": this.state.form.customer_id.value, "account_detail": this.state.form.box_no.value };
-            const token = isTokenValid(USER_AUTH_TOKEN);
+            const token = isTokenValid(EXT_TOKEN);
+            console.log("Token for otp",token);
             if (token) {
                 const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey };
+                console.log("sending token details");
                 extApi.post(url, request, { headers: headers })
                     .then(response => {
                         let data = response.data.data;
@@ -148,7 +150,7 @@ class RegisterPage extends Component {
                 password: this.state.form.password.value,
                 otp: this.state.form.otp.value
             }
-            const token = isTokenValid(USER_AUTH_TOKEN);
+            const token = isTokenValid(EXT_TOKEN);
             if (token) {
                 const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey };
                 extApi.post(url, request, { headers: headers })

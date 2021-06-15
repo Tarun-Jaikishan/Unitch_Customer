@@ -2,7 +2,6 @@ import React from 'react';
 import BouListSel from './BouListSel';
 
 const BouquetSelectionListing = ({ bouquets, title, is_checked, disabled, removeBouquet }) => {
-    console.log('Boquuet', bouquets, title);
     return (
         <div className="card col col-12 col-sm-12 col-lg-12">
             <div className="card-header">

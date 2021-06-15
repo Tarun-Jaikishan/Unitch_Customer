@@ -12,18 +12,20 @@ import RenewalPage from './pages/RenewalPage';
 import AddonsPage from './pages/AddonsPage';
 import LogoutPage from './pages/LogoutPage';
 import PeriodSelectionPage from './pages/PeriodSelectionPage';
-import { isExtTokenValid } from './utilits';
+import { isTokenValid } from './utilits';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRestrictedRoute from './components/PublicRestrictedRoute';
 import TicketPage from './pages/TicketPage';
 import LedgerPage from './pages/LedgerPage';
 import CustomerUpdate from './pages/CustomerUpdate';
 import AddTicketPage from './pages/AddTicketPage';
+import { EXT_TOKEN } from './env.conf';
+
 
 class Routes extends Component {
 
   componentDidMount() {
-    if (!isExtTokenValid()) {
+    if (!isTokenValid(EXT_TOKEN)) {
       this.props.auth();
     }
     this.props.autoLogin();
@@ -39,13 +41,13 @@ class Routes extends Component {
       <MainLayout is_customer={this.props.is_customer}>
         <Switch>
           <PrivateRoute component={AccountPage} exact path="/myaccount" is_customer={this.props.is_customer} />
-          <PrivateRoute component={RenewalPage} exact path="/myaccount/renewal" is_customer={this.props.is_customer} />
-          <PrivateRoute component={AddonsPage} exact path="/myaccount/addons" is_customer={this.props.is_customer} />
-          <PrivateRoute component={PeriodSelectionPage} exact path="/myaccount/period" is_customer={this.props.is_customer} />
-          <PrivateRoute component={TicketPage} exact path="/myaccount/tickets" is_customer={this.props.is_customer} />
-          <PrivateRoute component={LedgerPage} exact path="/myaccount/ledger" is_customer={this.props.is_customer} />
-          <PrivateRoute component={CustomerUpdate} exact path="/myaccount/customer/update" is_customer={this.props.is_customer} />
-          <PrivateRoute component={AddTicketPage} exact path="/myaccount/add-tickets" is_customer={this.props.is_customer} />
+          <PrivateRoute component={RenewalPage} exact path="/myaccount/renewal/:account_id/:bouque_ids" is_customer={this.props.is_customer} />
+          <PrivateRoute component={AddonsPage} exact path="/myaccount/addons/:account_id" is_customer={this.props.is_customer} />
+          <PrivateRoute component={PeriodSelectionPage} exact path="/myaccount/period/:account_id/:bouque_ids/:type" is_customer={this.props.is_customer} />
+          <PrivateRoute component={TicketPage} exact path="/myaccount/tickets/:account_id" is_customer={this.props.is_customer} />
+          <PrivateRoute component={LedgerPage} exact path="/myaccount/ledger/:account_id/:smartcardno/:stbno" is_customer={this.props.is_customer} />
+          <PrivateRoute component={CustomerUpdate} exact path="/myaccount/customer/update/:account_id" is_customer={this.props.is_customer} />
+          <PrivateRoute component={AddTicketPage} exact path="/myaccount/add-tickets/:account_id" is_customer={this.props.is_customer} />
           
           {routerComponent}
           <PublicRestrictedRoute component={RegisterPage} exact path="/register" is_customer={this.props.is_customer} />

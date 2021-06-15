@@ -15,13 +15,45 @@ class PeriodSelectionPage extends Component {
             rperiod_id: null,
             is_error: false,
             error_message: null,
+            account_id: null,
+            bouquet_ids: null,
+            type: null
         }
     }
 
     componentDidMount() {
-        if (this.props.location.state.bouquet_ids !== undefined && this.props.location.state.account_id !== undefined) {
-            const url = `recharge-period/${this.props.location.state.bouquet_ids.join("-")}/mview`;
-            const reqData = { account_id: this.props.location.state.account_id };
+        let bouquet_ids;
+        let account_id;
+        let type;
+        //this.props.location.state.bouquet_ids !== undefined && this.props.location.state.account_id !== undefined
+
+        if (this.props.match !== undefined) {
+            if (this.props.match.params.account_id) {
+                account_id = this.props.match.params.account_id;
+            }
+
+            if (this.props.match.params.bouque_ids) {
+                bouquet_ids = this.props.match.params.bouque_ids.split(',');
+            }
+
+            if (this.props.match.params.type) {
+                type = this.props.match.params.type;
+            }
+        } else if (this.props.location.state !== undefined) {
+            if (this.props.location.state.bouquet_ids !== undefined) {
+                bouquet_ids = this.props.location.state.bouquet_ids.split(',');
+            }
+            if (this.props.location.state.account_id !== undefined) {
+                account_id = this.props.location.state.account_id;
+            }
+            if (this.props.location.state.type !== undefined) {
+                type = this.props.location.state.type;
+            }
+        }
+
+        if (account_id && bouquet_ids) {
+            const url = `recharge-period/${bouquet_ids.join("-")}/mview`;
+            const reqData = { account_id: account_id };
             const token = isTokenValid(USER_TOKEN);
             if (token) {
                 const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey }
@@ -31,8 +63,11 @@ class PeriodSelectionPage extends Component {
                         if (d[0]) {
                             const data = Object.values(d[0]);
                             this.setState({
-                                period_list: [...data]
-                            })
+                                period_list: [...data],
+                                account_id: account_id,
+                                bouquet_ids: bouquet_ids,
+                                type: type
+                            });
                         }
                     }).catch(err => {
                         if (err) {
@@ -46,7 +81,12 @@ class PeriodSelectionPage extends Component {
                     });
             }
         } else {
-            history.push('/myaccount');
+            history.push({
+                pathname: '/myaccount',
+                hash: "#",
+                search: '',
+                state: {}
+            })
         }
     }
 
@@ -58,9 +98,8 @@ class PeriodSelectionPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        if (this.props.location.state.bouquet_ids !== undefined &&
-            this.props.location.state.account_id !== undefined &&
-            this.state.rperiod_id != null
+        if (this.state.bouquet_ids !== null && this.state.account_id !== null &&
+            this.state.rperiod_id !== null
         ) {
             document.getElementById('checkout').submit();
         }
@@ -70,17 +109,17 @@ class PeriodSelectionPage extends Component {
     render() {
         let hiddenform = "";
 
-        if (this.props.location.state.bouquet_ids !== undefined &&
-            this.props.location.state.account_id !== undefined) {
+        if (this.state.bouquet_ids !== null &&
+            this.state.account_id !== null) {
             const rperiod_id = this.state.rperiod_id;
             hiddenform = (
                 <form method="post" action={getPaymentUrl()} id="checkout">
                     <input type="hidden" name="rperiod_id" value={rperiod_id} />
-                    <input type="hidden" name="account_ids" value={this.props.location.state.account_id} />
+                    <input type="hidden" name="account_ids" value={this.state.account_id} />
                     <input type="hidden" name="remark" value="Renewal from Customer portal" />
-                    <input type="hidden" name="type" value={this.props.location.state.type} />
+                    <input type="hidden" name="type" value={this.state.type} />
                     <input type="hidden" name="backurl" value={BACKURL} />
-                    {this.props.location.state.bouquet_ids.map((b, i) => <input type="hidden" name="bouque_ids[]" value={b} />)}
+                    {this.state.bouquet_ids.map((b, i) => <input type="hidden" name="bouque_ids[]" value={b} />)}
                 </form>
             );
         }
@@ -98,7 +137,7 @@ class PeriodSelectionPage extends Component {
                             {
                                 this.state.period_list.map((d, index) => <PriceList
                                     id={d.id}
-                                    key={index}
+                                    key={d.id}
                                     ncf_mrp_price={d.NcfMrpPrice}
                                     ncf_mrp_tax={d.NcfMrpTax}
                                     ncf_mrp_total={d.NcfMrpTotal}
@@ -132,6 +171,7 @@ class PeriodSelectionPage extends Component {
                     {this.state.error_message}.
                     <Alert.Link href="#" onClick={() => history.push({
                         pathname: '/myaccount',
+                        hash: "#",
                         search: '',
                         state: {}
                     })}>Go to My Account</Alert.Link>.

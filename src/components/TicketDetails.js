@@ -1,6 +1,4 @@
-import react from 'react';
-import { ListGroupItem, ListGroup, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { ListGroupItem, ListGroup} from 'react-bootstrap';
 import { ChatLeftText } from 'react-bootstrap-icons';
 
 const TicketDetails = (props) => (

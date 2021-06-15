@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Nav from 'react-bootstrap/Nav'
+import { Container, Col } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Nav from 'react-bootstrap/Nav';
 import NavLink from 'react-bootstrap/NavLink';
 import TabContainer from 'react-bootstrap/TabContainer'
 import TabContent from 'react-bootstrap/TabContent';
@@ -10,7 +12,8 @@ import * as action from '../redux/action/index';
 import PlanList from '../components/PlanList';
 import { NavItem } from 'react-bootstrap';
 import PlanDetails from '../components/PlanDetails';
-
+import SearchBar from '../components/SearchBar';
+import { matchString } from '../utilits';
 
 class PlanPage extends Component {
 
@@ -19,10 +22,10 @@ class PlanPage extends Component {
 
         this.state = {
             modalShow: false,
-            bouquet_id: null
+            bouquet_id: null,
+            searchVal: ""
         }
     }
-
 
     componentDidMount() {
         if (Object.keys(this.props.bouquet).length <= 0) {
@@ -33,7 +36,7 @@ class PlanPage extends Component {
     openChannelList = (id) => {
         this.setState({
             bouquet_id: id,
-            modalShow: true
+            modalShow: true,
         });
 
     };
@@ -44,37 +47,69 @@ class PlanPage extends Component {
         });
     }
 
+    setSearchScope = () => {
+        console.log("reset search state");
+        this.setState({
+            searchVal: ""
+        });
+    }
+
+    handleSearch = (srch) => {
+        this.setState({
+            searchVal: srch
+        });
+    }
+
 
     render() {
         let contents = <Spinner />;
 
         if (Object.keys(this.props.bouquet).length > 0) {
+            const baseList = this.props.bouquet.base.filter(e => {
+                return matchString(e.name, this.state.searchVal);
+            });
+            const addonList = this.props.bouquet.addon.filter(e => {
+                return matchString(e.name, this.state.searchVal);
+            });
+            const alacarteList = this.props.bouquet.alacarte.filter(e => {
+                return matchString(e.name, this.state.searchVal);
+            });
+
             contents = (
                 <div className="card">
                     <TabContainer id="left-tabs-example" defaultActiveKey="first" variant="pills">
                         <div className="card-header">
-                            <Nav variant="pills" className="flex-row nav nav-tabs Tab_header_tabs">
-                                <NavItem className="nav-item">
-                                    <NavLink className="nav-link" eventKey="first">Base</NavLink>
-                                </NavItem>
-                                <NavItem className="nav-item">
-                                    <NavLink className="nav-link" eventKey="second">Addon</NavLink>
-                                </NavItem>
-                                <NavItem className="nav-item">
-                                    <NavLink className="nav-link" eventKey="third">Alacarte</NavLink>
-                                </NavItem>
-                            </Nav>
+                            <Container>
+                                <Row>
+                                    <Col xs={6}>
+                                        <Nav variant="pills" className="flex-row nav nav-tabs Tab_header_tabs">
+                                            <NavItem className="nav-item">
+                                                <NavLink className="nav-link" eventKey="first" onClick={() => this.setSearchScope()}>Base</NavLink>
+                                            </NavItem>
+                                            <NavItem className="nav-item">
+                                                <NavLink className="nav-link" eventKey="second" onClick={() => this.setSearchScope()}>Addon</NavLink>
+                                            </NavItem>
+                                            <NavItem className="nav-item">
+                                                <NavLink className="nav-link" eventKey="third" onClick={() => this.setSearchScope()}>Alacarte</NavLink>
+                                            </NavItem>
+                                        </Nav>
+                                    </Col>
+                                    <Col>
+                                        <SearchBar callback={this.handleSearch} searchVal={this.state.searchVal} />
+                                    </Col>
+                                </Row>
+                            </Container>
                         </div>
                         <div className="card-body">
                             <TabContent>
                                 <TabPane eventKey="first">
-                                    <PlanList bouquets={this.props.bouquet.base} callback={this.openChannelList} />
+                                    <PlanList bouquets={baseList} callback={this.openChannelList} />
                                 </TabPane>
                                 <TabPane eventKey="second">
-                                    <PlanList bouquets={this.props.bouquet.addon} callback={this.openChannelList} />
+                                    <PlanList bouquets={addonList} callback={this.openChannelList} />
                                 </TabPane>
                                 <TabPane eventKey="third">
-                                    <PlanList bouquets={this.props.bouquet.alacarte} callback={this.openChannelList} />
+                                    <PlanList bouquets={alacarteList} callback={this.openChannelList} />
                                 </TabPane>
                             </TabContent>
                         </div>

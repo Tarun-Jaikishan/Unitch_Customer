@@ -1,4 +1,4 @@
-import { createBrowserHistory } from 'history';
+import { createHashHistory} from 'history';
 import { PAYMENT_URL, USER_TOKEN } from './env.conf';
 
 export const RemoveTokens = (is_customer) => {
@@ -12,7 +12,7 @@ export const RemoveTokens = (is_customer) => {
     history.push('/');
 }
 
-export const history = createBrowserHistory();
+export const history = createHashHistory();//createBrowserHistory();
 
 export const FormErrorDisplay = ({ error }) => <div className="invalid-feedback">{error}</div>;
 
@@ -21,7 +21,7 @@ export const isExtTokenValid = () => {
     if (!token) return false;
 
     const t = JSON.parse(token);
-    console.log('parse tokenss...', t);
+   // console.log('parse tokenss...', t);
     return calculateTokenExpiry(t.time)
 }
 
@@ -30,7 +30,7 @@ const calculateTokenExpiry = (token_time) => {
     const endTime = new Date();
     const difference = endTime.getTime() - startTime.getTime(); // This will give difference in milliseconds
     const resultInMinutes = Math.round(difference / 60000);
-    return resultInMinutes < 5;
+    return resultInMinutes < 10;
 }
 
 export const extToken = () => {
@@ -48,7 +48,7 @@ export const isTokenValid = (type) => {
     if (!token) return false;
 
     const t = JSON.parse(token);
-    console.log('parse tokenss...', t);
+  //  console.log('parse tokenss...', t);
     const is_valid = calculateTokenExpiry(t.time);
     if (is_valid) {
         localStorage.setItem(type, JSON.stringify({ ...t, time: new Date() }))
@@ -59,4 +59,8 @@ export const isTokenValid = (type) => {
 export const getPaymentUrl = () => {
     const t = isTokenValid(USER_TOKEN);
     return PAYMENT_URL + '&pa=' + t;
+}
+
+export const matchString = (str, matchSrt) => {
+    return str.toLowerCase().indexOf(matchSrt.toLowerCase()) > -1;
 }

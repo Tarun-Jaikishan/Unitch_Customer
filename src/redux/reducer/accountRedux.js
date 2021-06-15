@@ -74,7 +74,6 @@ const fetchAddon = (state, action) => {
 const addSelectedBouquet = (state, action) => {
     if (action.bouquet_id) {
         let bouquet_ids = action.is_renewal ? [...state.renewal.bouquet_id] : [...state.addons.bouquet_id];
-        console.log('Boquuet fetch action redux', action);
         if (action.is_add) {
             bouquet_ids = [...bouquet_ids, action.bouquet_id];
         } else {

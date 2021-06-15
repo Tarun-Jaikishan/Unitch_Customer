@@ -3,9 +3,9 @@ import { extApi } from '../axios';
 import Spinner from './Spinner';
 import PopupModal from './PopupModal';
 import BlockContent from './BlockContent';
-import { RemoveTokens } from '../utilits';
+import { RemoveTokens,isTokenValid } from '../utilits';
 import { Accordion } from 'react-bootstrap';
-
+import { API_SETTING, EXT_TOKEN } from '../env.conf';
 
 class PlanDetails extends Component {
 
@@ -33,23 +33,27 @@ class PlanDetails extends Component {
 
     fetchBouquetDetails = () => {
         const url = `/bouque/${this.props.id}?fields=id,name&expand=channels`;
-        extApi.get(url)
-            .then(response => {
-                console.log(response);
-                const resp = response.data.data;
-                this.setState({
-                    name: resp.name,
-                    id: resp.id,
-                    channels: resp.channels,
-                    is_loading: false
-                });
-            }).catch(err => {
-                if (err.response) {
-                    if (err.response.data.status === 401) {
-                        RemoveTokens(false);
+        const token = isTokenValid(EXT_TOKEN);
+        if (token) {
+            const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey }
+
+            extApi.get(url, { headers: headers })
+                .then(response => {
+                    const resp = response.data.data;
+                    this.setState({
+                        name: resp.name,
+                        id: resp.id,
+                        channels: resp.channels,
+                        is_loading: false
+                    });
+                }).catch(err => {
+                    if (err.response) {
+                        if (err.response.data.status === 401) {
+                            RemoveTokens(false);
+                        }
                     }
-                }
-            });
+                });
+        }
     }
 
 

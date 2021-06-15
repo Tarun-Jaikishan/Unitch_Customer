@@ -1,4 +1,5 @@
 import React from 'react';
+import { SITE_SETTING } from '../env.conf';
 
 const PricingCard = ({ id, name, price, features, callback }) => (
 
@@ -10,11 +11,11 @@ const PricingCard = ({ id, name, price, features, callback }) => (
                 <ul className="list-unstyled leading-loose">
                     {features.map((feature, index) => <li key={feature.name}>{feature.name} <strong>{feature.value}</strong></li>)}
                 </ul>
-                <div className="text-center mt-6">
+                {SITE_SETTING.settings.plan_details && <div className="text-center mt-6">
                     {callback && <button className="btn btn-secondary btn-block" onClick={() => callback(id)}>
                         <i className="fe fe-align-justify" />
                     </button>}
-                </div>
+                </div>}
             </div>
         </div>
     </div>

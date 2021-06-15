@@ -1,6 +1,8 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table'
 import Pagination from 'react-bootstrap/Pagination';
+import { FileEarmark } from 'react-bootstrap-icons';
 import { isTokenValid } from '../utilits';
 import SpinnerLoading from '../components/Spinner';
 import { API_SETTING, USER_TOKEN } from '../env.conf';
@@ -19,11 +21,33 @@ class LedgerPage extends Component {
     };
 
     componentDidMount() {
-        console.log("lohdhdhdhdh", this.props.location.state.account_id);
-        if (this.props.location.state.account_id !== undefined) {
-            const account_id = this.props.location.state.account_id;
-            const smartcardno = this.props.location.state.smartcardno;
-            const stbno = this.props.location.state.stbno;
+
+        let account_id;
+        let smartcardno;
+        let stbno;
+
+        if (this.props.match !== undefined) {
+            if (this.props.match.params.account_id) {
+                account_id = this.props.match.params.account_id;
+            }
+            if (this.props.match.params.smartcardno) {
+                smartcardno = this.props.match.params.smartcardno;
+            }
+            if (this.props.match.params.stbno) {
+                stbno = this.props.match.params.stbno;
+            }
+        } else if (this.props.location.state !== undefined) {
+            if (this.props.location.state.account_id !== undefined) {
+                account_id = this.props.location.state.account_id;
+            }
+            if (this.props.location.state.smartcardno !== undefined) {
+                smartcardno = this.props.location.state.smartcardno;
+            }
+            if (this.props.location.state.stbno !== undefined) {
+                stbno = this.props.location.state.stbno;
+            }
+        }
+        if (account_id !== undefined && smartcardno !== undefined && stbno !== undefined) {
             this.setState({
                 account_id,
                 smartcardno,
@@ -40,11 +64,9 @@ class LedgerPage extends Component {
             const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey }
             api.get(url, { headers })
                 .then(resp => {
-                    console.log("Reponse geader", resp.headers);
                     if (resp.data.success) {
                         const d = resp.data.data;
                         const resp_header = resp.headers;
-                        console.log("Sub Transactions", d);
                         this.setState({
                             transactions: d.filter(i => i.mrp > 0),
                             current_page: resp_header['x-pagination-current-page'],
@@ -82,11 +104,15 @@ class LedgerPage extends Component {
                                 <th>Amount</th>
                                 <th>Tax</th>
                                 <th>Total</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.transactions.map((item, index) => (
-                                <tr>
+                            {this.state.transactions.map((item, index) => {
+                                let decode = btoa(`t_${item.id}`);
+                                let url = `${API_SETTING.front_url}${item.id}?vati=${decode}`;
+
+                                return (<tr key={item.id}>
                                     <td>{((this.state.current_page - 1) * 10) + index + 1}</td>
                                     <td>{item.reciept_no}</td>
                                     <td>{item.created_at}</td>
@@ -94,11 +120,14 @@ class LedgerPage extends Component {
                                     <td>{item.note_lbl}</td>
                                     <td>{item.mrp}</td>
                                     <td>{item.mrp_tax || 0}</td>
-                                    <td>{parseFloat(item.mrp_tax || 0) + parseFloat(item.mrp)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                                    <td>{parseFloat(item.mrp_tax || 0.00) + parseFloat(item.mrp)}</td>
+                                    <td>
+                                        {item.note_lbl === 'Cr' && <Link to={{ pathname: url }} target='_blank'><FileEarmark /></Link>}
+                                    </td>
+                                </tr>);
+                            })}
+                        </tbody >
+                    </Table >
                 );
 
                 for (let number = 1; number <= this.state.page_count; number++) {

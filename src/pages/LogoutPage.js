@@ -14,7 +14,7 @@ class LogoutPage extends Component {
 
     render() {
         return (<div className="nav-item">
-            <Link className="btn btn-sm btn-outline-primary ml-1" onClick={this.logot}>Logout</Link>
+            <Link className="btn btn-sm btn-outline-primary ml-1" to="/logout" onClick={this.logot}>Logout</Link>
         </div>
         );
     }

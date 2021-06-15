@@ -24,10 +24,20 @@ class AddTicketPage extends Component {
     }
 
     componentDidMount() {
+        let account_id;
+        if (this.props.match !== undefined) {
+            if (this.props.match.params.account_id) {
+                account_id = this.props.match.params.account_id;
+            }
+        } else if (this.props.location.state !== undefined) {
+            if (this.props.location.state.account_id !== undefined) {
+                account_id = this.props.location.state.account_id;
+            }
+        }
 
-        if (this.props.location.state.account_id !== undefined) {
+        if (account_id !== undefined) {
             this.setState({
-                account_id: this.props.location.state.account_id
+                account_id: account_id
             });
         }
 
@@ -104,9 +114,10 @@ class AddTicketPage extends Component {
                     .then(resp => {
                         if (resp.data.success) {
                             const d = resp.data.success;
-                            console.log("Tciket Response",d,resp.data.success);
+                            console.log("Tciket Response", d, resp.data.success);
                             history.push({
                                 pathname: '/myaccount',
+                                hash: "#",
                                 search: '?is_suc=1',
                                 state: { ticket_no: "ticket" }
                             });

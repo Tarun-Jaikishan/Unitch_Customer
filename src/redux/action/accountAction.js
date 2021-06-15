@@ -42,12 +42,6 @@ export const customer = (accounts, profile) => {
 }
 
 export const fetchBouquet = (bouquets, bouquet_id, account_id) => {
-    console.log("Action changes", {
-        type: actionType.FETCH_BOUQUE,
-        bouquet_id: bouquet_id,
-        bouquets: bouquets,
-        account_id: account_id
-    });
     return {
         type: actionType.FETCH_BOUQUE,
         bouquet_id: bouquet_id,
@@ -77,7 +71,6 @@ export const fetchAccounts = () => {
             const headers = { "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey }
             api.get(url, { headers })
                 .then(resp => {
-                    console.log(resp);
                     if (resp.data.success) {
                         const d = resp.data.data;
                         dispatch(customer(d.accounts, d.profile));
