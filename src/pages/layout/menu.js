@@ -6,10 +6,10 @@ import PlanPage from '../PlanPage';
 export const MENU_LIST = {
     non_login: [
         { icon: "fe fe-home", label: "Home", url: '/', component: HomePage },
-     //   { icon: "fe fe-address-card-o", label: "About Us", url: '/aboutus', component: AboutPage },
+        //   { icon: "fe fe-address-card-o", label: "About Us", url: '/aboutus', component: AboutPage },
         { icon: "fe fe-activity", label: "Plans", url: "/plans", component: PlanPage },
-     //   { icon: "fe fe-briefcase", label: "Service", url: "/services", component: ServicePage },
-       // { icon: "fe fe-map-pin", label: "Contact Us", url: "/contactus", component: ContactPage },
+        //   { icon: "fe fe-briefcase", label: "Service", url: "/services", component: ServicePage },
+        // { icon: "fe fe-map-pin", label: "Contact Us", url: "/contactus", component: ContactPage },
     ],
 };
 
@@ -17,11 +17,18 @@ const Menu = (props) => {
     let showAccount = '';
     if (props.is_customer) {
         showAccount = (
-            <li className="nav-item">
-                <NavLink to='/myaccount' className="nav-link" exact activeClassName="active">
-                    <i className="fe fe-user"></i>My Account
-                </NavLink>
-            </li>
+            <>
+                <li className="nav-item">
+                    <NavLink to='/myaccount' className="nav-link" exact activeClassName="active">
+                        <i className="fe fe-user"></i>My Account
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink to='/profile' className="nav-link" exact activeClassName="active">
+                        <i className="fe fe-user"></i>My Profile
+                    </NavLink>
+                </li>
+            </>
         );
     }
 

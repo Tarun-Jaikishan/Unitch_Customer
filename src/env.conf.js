@@ -5,7 +5,8 @@ export const SITE_SETTING = {
     company_contact: { crm: window.Configs.CRM_MOBILE_NO, supp: window.Configs.CRM_SUPPORT_NO },
     company_email: window.Configs.SUPPORT_EMAIL,
     company_logo: window.Configs.COMPANY_LOGO,
-    settings: window.Configs.settings
+    settings: window.Configs.settings,
+    dashboard_carousel: window.Configs.DASHBOARD_CAROUSEL
 };
 
 
@@ -13,8 +14,8 @@ export const API_SETTING = {
     url: window.Configs.API_URL,
     front_url: window.Configs.FRONT_URL,
     authkey: window.Configs.AUTH_KEY,
-    username: window.Configs.USERNAME,
-    password: window.Configs.PASSWORD
+    access_key: window.Configs.ACCESS_KEY,
+    aaauth_key: window.Configs.AAUTH_KEY
 }
 
 export const BOUQUET_BASE = 1;

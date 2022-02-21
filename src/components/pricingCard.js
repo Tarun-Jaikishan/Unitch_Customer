@@ -1,6 +1,7 @@
 import React from 'react';
 import { SITE_SETTING } from '../env.conf';
 
+
 const PricingCard = ({ id, name, price, features, callback }) => (
 
     <div className="col col-sm-3 col-lg-3">

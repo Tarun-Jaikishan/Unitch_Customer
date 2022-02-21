@@ -1,32 +1,11 @@
 import React, { Component } from 'react';
 import Carousel from 'react-bootstrap/Carousel'
-import SliderOne from '../resouces/images/front/slider1.jpg';
-import SliderTwo from '../resouces/images/front/slider2.jpg';
+import { SITE_SETTING } from '../env.conf';
 import HighLights from '../components/home/HighLights';
 
 class HomePage extends Component {
 
-    carousel_list = [
-        {
-            title: "EFFICIENCE APP",
-            caption: "ONE APP FOR ALL",
-            description: "Renew Subscription | Add Channels | Raise Complaint",
-            imageUrl: SliderOne,
-            style: {
-                top: "48%",
-                left: 0,
-                right: "auto",
-                width: "40%"
-            }
-        },
-        {
-            title: "Redefine TV Experience",
-            caption: "Redefine TV Experience",
-            description: "Watch all favourite contents in HD",
-            imageUrl: SliderTwo,
-            style: {}
-        },
-    ];
+    carousel_list = SITE_SETTING.dashboard_carousel;
 
     render() {
         return (<div>

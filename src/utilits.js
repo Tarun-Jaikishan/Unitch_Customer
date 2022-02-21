@@ -1,5 +1,6 @@
-import { createHashHistory} from 'history';
-import { PAYMENT_URL, USER_TOKEN } from './env.conf';
+import { createHashHistory } from 'history';
+import { PAYMENT_URL, USER_TOKEN, USER_DETAILS_STORAGE, USER_AUTH_TOKEN } from './env.conf';
+import {  Redirect } from 'react-router'
 
 export const RemoveTokens = (is_customer) => {
     if (is_customer) {
@@ -21,7 +22,7 @@ export const isExtTokenValid = () => {
     if (!token) return false;
 
     const t = JSON.parse(token);
-   // console.log('parse tokenss...', t);
+    // console.log('parse tokenss...', t);
     return calculateTokenExpiry(t.time)
 }
 
@@ -48,7 +49,7 @@ export const isTokenValid = (type) => {
     if (!token) return false;
 
     const t = JSON.parse(token);
-  //  console.log('parse tokenss...', t);
+    //  console.log('parse tokenss...', t);
     const is_valid = calculateTokenExpiry(t.time);
     if (is_valid) {
         localStorage.setItem(type, JSON.stringify({ ...t, time: new Date() }))
@@ -63,4 +64,12 @@ export const getPaymentUrl = () => {
 
 export const matchString = (str, matchSrt) => {
     return str.toLowerCase().indexOf(matchSrt.toLowerCase()) > -1;
+}
+
+export const logoutUser = (e) => {
+    e.preventDefault();
+    localStorage.removeItem(USER_TOKEN);
+    localStorage.removeItem(USER_DETAILS_STORAGE);
+    localStorage.removeItem(USER_AUTH_TOKEN);
+    <Redirect to="/"/>
 }

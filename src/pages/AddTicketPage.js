@@ -114,7 +114,7 @@ class AddTicketPage extends Component {
                     .then(resp => {
                         if (resp.data.success) {
                             const d = resp.data.success;
-                            console.log("Tciket Response", d, resp.data.success);
+                            console.log("Ticket Response", d, resp.data.success);
                             history.push({
                                 pathname: '/myaccount',
                                 hash: "#",

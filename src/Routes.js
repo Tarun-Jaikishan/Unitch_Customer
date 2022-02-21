@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import MainLayout from './pages/layout/main';
@@ -10,7 +10,6 @@ import RegisterPage from './pages/RegisterPage';
 import AccountPage from './pages/MyAccountPage';
 import RenewalPage from './pages/RenewalPage';
 import AddonsPage from './pages/AddonsPage';
-import LogoutPage from './pages/LogoutPage';
 import PeriodSelectionPage from './pages/PeriodSelectionPage';
 import { isTokenValid } from './utilits';
 import PrivateRoute from './components/PrivateRoute';
@@ -20,6 +19,7 @@ import LedgerPage from './pages/LedgerPage';
 import CustomerUpdate from './pages/CustomerUpdate';
 import AddTicketPage from './pages/AddTicketPage';
 import { EXT_TOKEN } from './env.conf';
+import ProfilePage from './pages/myaccount/ProfilePage';
 
 
 class Routes extends Component {
@@ -48,11 +48,11 @@ class Routes extends Component {
           <PrivateRoute component={LedgerPage} exact path="/myaccount/ledger/:account_id/:smartcardno/:stbno" is_customer={this.props.is_customer} />
           <PrivateRoute component={CustomerUpdate} exact path="/myaccount/customer/update/:account_id" is_customer={this.props.is_customer} />
           <PrivateRoute component={AddTicketPage} exact path="/myaccount/add-tickets/:account_id" is_customer={this.props.is_customer} />
-          
+          <PrivateRoute component={ProfilePage} exact path="/profile" is_customer={this.props.is_customer} />
+
           {routerComponent}
           <PublicRestrictedRoute component={RegisterPage} exact path="/register" is_customer={this.props.is_customer} />
           <PublicRestrictedRoute component={LoginPage} exact path="/login" is_customer={this.props.is_customer} />
-          <Route exact path='/logout' component={withRouter(LogoutPage)} />
         </Switch>
       </MainLayout >
     );

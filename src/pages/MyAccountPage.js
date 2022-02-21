@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as action from '../redux/action/index';
-import ProfilePage from './myaccount/ProfilePage';
 import SpinnerLoading from '../components/Spinner';
 import AccountPage from './myaccount/AccountPage';
 import { api } from '../axios';
@@ -58,10 +57,7 @@ class MyAccountPage extends Component {
         let content = (<SpinnerLoading />);
         if (Object.keys(this.props.profile).length !== 0) {
             content = (<div className="row">
-                <div className="col-md-3 mb-3">
-                    <ProfilePage profile={this.props.profile} />
-                </div>
-                <div className="col-md-9 mb-3">
+                <div className="col-md-12 mb-12">
                     <AccountPage accounts={this.props.accounts} banners={this.state.adv_banner} />
                 </div>
             </div>);

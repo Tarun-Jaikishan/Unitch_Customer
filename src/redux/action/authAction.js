@@ -86,15 +86,32 @@ const setToken = (response, dispatch) => {
 export const auth = (username = '', password = '', isUserSignin = false) => {
     return dispatch => {
         dispatch(authStart());
-        const authData = {
-            LoginForm: {
-                username: username || API_SETTING.username,
-                password: password || API_SETTING.password
+      
+        if (isUserSignin) {
+            const authData = {
+                LoginForm: {
+                    username: username || API_SETTING.username,
+                    password: password || API_SETTING.password
+                }
             }
-        }
-
-        if (!isUserSignin) {
+    
             extApi.post('/user/login', authData)
+                .then(response => {
+                    setToken(response, dispatch);
+                })
+                .catch(err => {
+                    if (err) {
+                        dispatch(authFail(err));
+                    }
+                })
+        } else {
+            const tokenRequest = {
+                LoginForm:{
+                    token: API_SETTING.access_key
+                }
+            };
+            const headers = {'authkey': API_SETTING.aaauth_key};
+            api.post('/user/login-token', tokenRequest, { headers: headers })
                 .then(response => {
                     let data = response.data.data;
                     let user_data = {
@@ -105,18 +122,7 @@ export const auth = (username = '', password = '', isUserSignin = false) => {
                     };
                     localStorage.setItem(EXT_TOKEN, JSON.stringify({ token: data.access_token, time: new Date() }));
                     localStorage.setItem(EXT_USER, data.name);
-                    dispatch(authSuccess(data.access_token, user_data))
-                })
-                .catch(err => {
-                    if (err) {
-                        dispatch(authFail(err));
-                    }
-                })
-        } else {
-            const headers = { 'authkey': API_SETTING.authkey };
-            api.post('/user/login', authData, { headers: headers })
-                .then(response => {
-                    setToken(response, dispatch);
+                    dispatch(authSuccess(data.access_token, user_data));
                 })
                 .catch(err => {
                     if (err.response) {
