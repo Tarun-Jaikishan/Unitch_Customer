@@ -77,7 +77,7 @@ export const fetchAccounts = () => {
                     }
                 }).catch(err => {
                     console.log(err);
-                    dispatch(onError(err));
+                    //dispatch(onError(err));
                 });
         } else {
             RemoveTokens(true);

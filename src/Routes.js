@@ -20,6 +20,7 @@ import CustomerUpdate from './pages/CustomerUpdate';
 import AddTicketPage from './pages/AddTicketPage';
 import { EXT_TOKEN } from './env.conf';
 import ProfilePage from './pages/myaccount/ProfilePage';
+import ProfileEditPage from './pages/myaccount/ProfileEditPage';
 
 
 class Routes extends Component {
@@ -49,7 +50,7 @@ class Routes extends Component {
           <PrivateRoute component={CustomerUpdate} exact path="/myaccount/customer/update/:account_id" is_customer={this.props.is_customer} />
           <PrivateRoute component={AddTicketPage} exact path="/myaccount/add-tickets/:account_id" is_customer={this.props.is_customer} />
           <PrivateRoute component={ProfilePage} exact path="/profile" is_customer={this.props.is_customer} />
-
+          <PrivateRoute component={ProfileEditPage} exact path="/profile/edit/:id" is_customer={this.props.is_customer} />
           {routerComponent}
           <PublicRestrictedRoute component={RegisterPage} exact path="/register" is_customer={this.props.is_customer} />
           <PublicRestrictedRoute component={LoginPage} exact path="/login" is_customer={this.props.is_customer} />

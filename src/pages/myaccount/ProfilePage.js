@@ -3,12 +3,14 @@ import SpinnerLoading from '../../components/Spinner';
 import { connect } from 'react-redux';
 import * as action from '../../redux/action/index';
 import InlineVerfiy from '../../components/InlineVerify';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { API_SETTING, USER_TOKEN } from '../../env.conf';
 import { isTokenValid } from '../../utilits';
 import { api } from '../../axios';
 import { Table } from 'react-bootstrap';
 import { SITE_SETTING } from '../../env.conf';
+import { PencilSquare } from 'react-bootstrap-icons';
+import { history } from '../../utilits';
 
 
 class ProfilePage extends Component {
@@ -24,7 +26,6 @@ class ProfilePage extends Component {
 
     async componentDidMount() {
         await this.props.fetchAccounts();
-
     }
 
     sendOtp = async (type, contact_details) => {
@@ -102,6 +103,13 @@ class ProfilePage extends Component {
 
     }
 
+    redirectProfilePage = () => history.push({
+        pathname: `/profile/edit/${this.props.profile.id}`,
+        hash: "#",
+        search: '',
+        state: {}
+    });
+
     render() {
         let content = (<SpinnerLoading />);
         if (this.props.profile) {
@@ -120,6 +128,12 @@ class ProfilePage extends Component {
                 <div className="row">
                     <div className="col-md-12 mb-12">
                         <div className="row gutters-sm">
+                            <div className="card-header col-md-12 mb-12">
+                                <div className="card-title  col-md-12 mb-12">
+                                    My Profile
+                                    <Button style={{ float: 'right' }} variant="outline-primary" onClick={() => this.redirectProfilePage()} title="Edit My Prpfile"> <PencilSquare /> </Button>
+                                </div>
+                            </div>
                             <div className="card mt-3">
                                 <Container>
                                     <Row xs={2} md={4} lg={6}>

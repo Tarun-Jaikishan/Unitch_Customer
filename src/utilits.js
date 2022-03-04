@@ -1,6 +1,6 @@
 import { createHashHistory } from 'history';
 import { PAYMENT_URL, USER_TOKEN, USER_DETAILS_STORAGE, USER_AUTH_TOKEN } from './env.conf';
-import {  Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 
 export const RemoveTokens = (is_customer) => {
     if (is_customer) {
@@ -71,5 +71,31 @@ export const logoutUser = (e) => {
     localStorage.removeItem(USER_TOKEN);
     localStorage.removeItem(USER_DETAILS_STORAGE);
     localStorage.removeItem(USER_AUTH_TOKEN);
-    <Redirect to="/"/>
+    <Redirect to="/" />
 }
+
+export const isString = (value) => (typeof value === 'string' || value instanceof String);
+export const isNumeric = (value) => !isNaN(value);
+export const isNumericGTZero = (value) => !isNaN(value) && parseInt(value) > 0;
+export const isAlphaNumeric = (value) => value.match(/^[\w\-\s]+$/);
+export const isaDate = (value) => {
+    var d = new Date(value);
+    return (d instanceof Date);
+}
+export const isEmail = (value) => String(value)
+    .toLowerCase()
+    .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+
+export const getBase64 = (file, cb) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        cb(reader.result)
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+}
+

@@ -142,7 +142,6 @@ class AddTicketPage extends Component {
                     </div>
                     <div className="card-body">
                         <Form onSubmit={this.handleSubmit}>
-
                             <Form.Group controlId="form.sub_category.value">
                                 <Form.Label>Category</Form.Label>
                                 <Form.Control as="select" onChange={this.handleInput} name="sub_category">
