@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import BouquetList from '../components/BouquetList';
 import { history } from '../utilits';
 
-const AccountList = ({ index, account }) => {
+const AccountList = ({ index, account, pygt }) => {
 
     const bouquet_ids = account.bouque.map(item => item.bouque_id);
     return (
@@ -11,25 +11,25 @@ const AccountList = ({ index, account }) => {
             <div className="card-header">
                 <div className="card-title">Account {index + 1}</div>
                 <div className="btn-list text-right" style={{ width: '70%' }}>
-                    <Button variant="primary" className="btn btn-outline-primary" onClick={() => history.push({
+                    {pygt !== 2 && <Button variant="outline-primary" className="m-2" onClick={() => history.push({
                         pathname: `/myaccount/renewal/${account.id}/${bouquet_ids}`,
                         hash: "#",
                         search: '',
                         state: { bouquet_ids: bouquet_ids, account_id: account.id }
-                    })} >Renew</Button> {' '}
-                    {account.status !== -2 && <Button variant="primary" className="pull-right" onClick={() => history.push({
+                    })} >Renew</Button>}
+                    {pygt !== 2 && account.status !== -2 && <Button variant="outline-primary" className="pull-right m-2" onClick={() => history.push({
                         pathname: `/myaccount/addons/${account.id}`,
                         hash: "#",
                         search: '',
                         state: { account_id: account.id }
-                    })} >Addons</Button>}{' '}
-                    <Button variant="primary" className="pull-right" onClick={() => history.push({
+                    })} >Addons</Button>}
+                    <Button variant="outline-primary" className="pull-right m-2" onClick={() => history.push({
                         pathname: `/myaccount/tickets/${account.id}`,
                         hash: "#",
                         search: '',
                         state: { account_id: account.id }
                     })} >Tickets</Button>
-                    <Button variant="primary" className="pull-right" onClick={() => history.push({
+                    <Button variant="outline-primary" className="pull-right m-2" onClick={() => history.push({
                         pathname: `/myaccount/ledger/${account.id}/${account.smartcardno}/${account.stbno}`,
                         hash: "#",
                         search: '',

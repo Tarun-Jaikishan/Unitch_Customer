@@ -58,7 +58,7 @@ class MyAccountPage extends Component {
         if (Object.keys(this.props.profile).length !== 0) {
             content = (<div className="row">
                 <div className="col-md-12 mb-12">
-                    <AccountPage accounts={this.props.accounts} banners={this.state.adv_banner} />
+                    <AccountPage accounts={this.props.accounts} pygt={this.props.pygt} banners={this.state.adv_banner} />
                 </div>
             </div>);
         }
@@ -73,7 +73,8 @@ const mapStateToProps = (state) => {
         accounts: state.customer.accounts,
         loading: state.customer.loading,
         error: state.customer.error,
-        is_customer: state.auth.is_customer
+        is_customer: state.auth.is_customer,
+        pygt:state.auth.pygt
     }
 }
 

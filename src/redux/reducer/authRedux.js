@@ -6,6 +6,8 @@ const initialState = {
     error: null,
     loading: false,
     is_customer: false,
+    force_reset_password: false,
+    pygt:false,
     user_details: {},
 };
 
@@ -24,6 +26,8 @@ const authSuccess = (state, { token, user }) => {
         user_id: user.id || null,
         user_details: user || {},
         is_customer: user.is_customer,
+        force_reset_password : user.force_reset_password,
+        pygt:user.pygt,
         error: null,
         loading: false
     };
@@ -44,6 +48,8 @@ const authLogout = (state, action) => {
         error: null,
         loading: false,
         is_customer: false,
+        force_reset_password: false,
+        pygt:false,
         user_details: {},
     }
 }

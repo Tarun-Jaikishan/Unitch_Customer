@@ -3,7 +3,9 @@ import { Modal, Button, Form, Container, Alert, Col, Row } from 'react-bootstrap
 import { isNumeric, isTokenValid, history } from '../utilits';
 import { API_SETTING, USER_TOKEN } from '../env.conf';
 import { api } from '../axios';
-
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as action from '../redux/action/index';
 
 class OtpVerificationModal extends Component {
 
@@ -24,7 +26,9 @@ class OtpVerificationModal extends Component {
                     errorMsg: null
                 },
             },
-            message: ""
+            message: "",
+            modal_show: false,
+            savingdate: false
         }
     }
 
@@ -65,6 +69,8 @@ class OtpVerificationModal extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        this.setState({ savingdate: true });
+
         if (this.isFormValid()) {
             const form = {
                 subscriber_id: this.props.subscriber_id
@@ -78,13 +84,15 @@ class OtpVerificationModal extends Component {
                 ...form
             }
             this.verifyOtp(formData);
+        } else {
+            this.setState({ savingdate: false });
         }
     }
 
     verifyOtp = (formData) => {
         const token = isTokenValid(USER_TOKEN);
         if (token) {
-            const url = "subscriber/update-contacts?debug=1";
+            const url = this.props.url ? this.props.url : "subscriber/update-contacts";
             const headers = {
                 "Authorization": `Bearer ${token}`, 'authkey': API_SETTING.authkey
             }
@@ -92,17 +100,24 @@ class OtpVerificationModal extends Component {
                 .then(resp => {
                     console.log('update contacts', resp.data.data);
                     if (resp.data.success) {
-                        history.push({
-                            pathname: '/profile',
-                            hash: "#",
-                            search: '?=1',
-                            state: { message: resp.data.data.message }
-                        });
-                        this.props.handleClose();
-                        return {
-                            status: resp.data.data.success,
-                            message: resp.data.data.message
-                        };
+                        if (this.props.url) {
+                            this.setState({
+                                modal_show: true
+                            });
+                            setTimeout(() => { this.props.logout() }, 5000);
+                        } else {
+                            history.push({
+                                pathname: '/profile',
+                                hash: "#",
+                                search: '?=1',
+                                state: { message: resp.data.data.message }
+                            });
+                            this.props.handleClose();
+                            return {
+                                status: resp.data.data.success,
+                                message: resp.data.data.message
+                            };
+                        }
                     }
                 }).catch(error => {
                     if (error.response) {
@@ -115,60 +130,84 @@ class OtpVerificationModal extends Component {
         }
     }
 
+
     render() {
+        const alertAndLogout = (<Modal
+            show={this.state.modal_show}
+            backdrop="static"
+            keyboard={false}
+        >
+            <Modal.Body>
+                <Alert variant="success">
+                    <p>Password changed successfully.</p>
+                    <p>Please login again with the new password.</p>
+                </Alert>
+            </Modal.Body>
+        </Modal>
+        );
         return (
-            <Modal show={this.props.modalshow} onHide={this.props.handleClose}>
-                <Form onSubmit={this.handleSubmit} >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Verify OTP</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="show-grid">
-                        <Container>
-                            {
-                                this.state.message && <Alert key="error_alert" variant="danger">
-                                    {this.state.message}
-                                </Alert>
-                            }
-                            <Row>
-                                <Col xs={12} md={8}>
-                                    <Form.Group controlId="email_id">
-                                        <Form.Label>Email OTP</Form.Label>
-                                        <Form.Control className="input-sm" type="text" name="email_otp"
-                                            placeholder="Enter email otp"
-                                            value={this.state.form.email_otp.value} onChange={this.handleChange} />
-                                        {this.state.form.email_otp.errorMsg && (
-                                            <p className="text-danger">{this.state.form.email_otp.errorMsg}</p>
-                                        )}
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={12} md={8}>
+            <>
+                <Modal show={this.props.modalshow} onHide={this.props.handleClose}>
+                    <Form onSubmit={this.handleSubmit} >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Verify OTP</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="show-grid">
+                            <Container>
+                                {
+                                    this.state.message && <Alert key="error_alert" variant="danger">
+                                        {this.state.message}
+                                    </Alert>
+                                }
+                                <Row>
                                     <Col xs={12} md={8}>
-                                        <Form.Group controlId="mobile_id">
-                                            <Form.Label>Mobile No. OTP</Form.Label>
-                                            <Form.Control className="input-sm" type="text" name="mobile_otp"
-                                                placeholder="Enter mobile no otp"
-                                                value={this.state.form.mobile_otp.value} onChange={this.handleChange} />
-                                            {this.state.form.mobile_otp.errorMsg && (
-                                                <p className="text-danger">{this.state.form.mobile_otp.errorMsg}</p>
+                                        <Form.Group controlId="email_id">
+                                            <Form.Label>Email OTP</Form.Label>
+                                            <Form.Control className="input-sm" type="text" name="email_otp"
+                                                placeholder="Enter email otp"
+                                                value={this.state.form.email_otp.value} onChange={this.handleChange} />
+                                            {this.state.form.email_otp.errorMsg && (
+                                                <p className="text-danger">{this.state.form.email_otp.errorMsg}</p>
                                             )}
                                         </Form.Group>
                                     </Col>
-                                </Col>
-                            </Row>
-                        </Container>
+                                    <Col xs={12} md={8}>
+                                        <Col xs={12} md={8}>
+                                            <Form.Group controlId="mobile_id">
+                                                <Form.Label>Mobile No. OTP</Form.Label>
+                                                <Form.Control className="input-sm" type="text" name="mobile_otp"
+                                                    placeholder="Enter mobile no otp"
+                                                    value={this.state.form.mobile_otp.value} onChange={this.handleChange} />
+                                                {this.state.form.mobile_otp.errorMsg && (
+                                                    <p className="text-danger">{this.state.form.mobile_otp.errorMsg}</p>
+                                                )}
+                                            </Form.Group>
+                                        </Col>
+                                    </Col>
+                                </Row>
+                            </Container>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.props.handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={this.handleSubmit}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal>);
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.props.handleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={this.handleSubmit} disabled={this.state.savingdate}>
+                                {this.state.savingdate ? "Saving data..." : "Save Changes"}
+                            </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+                {alertAndLogout}
+            </>
+        );
     }
 }
 
-export default OtpVerificationModal;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        logout: () => dispatch(action.logout())
+    }
+}
+export default connect(null, mapDispatchToProps)(withRouter(OtpVerificationModal));

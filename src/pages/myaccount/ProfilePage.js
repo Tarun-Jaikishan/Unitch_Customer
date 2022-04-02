@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import SpinnerLoading from '../../components/Spinner';
 import { connect } from 'react-redux';
 import * as action from '../../redux/action/index';
-import InlineVerfiy from '../../components/InlineVerify';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { API_SETTING, USER_TOKEN } from '../../env.conf';
 import { isTokenValid } from '../../utilits';
 import { api } from '../../axios';
 import { Table } from 'react-bootstrap';
-import { SITE_SETTING } from '../../env.conf';
-import { PencilSquare } from 'react-bootstrap-icons';
+import { PencilSquare, LockFill } from 'react-bootstrap-icons';
 import { history } from '../../utilits';
 
 
@@ -110,6 +108,13 @@ class ProfilePage extends Component {
         state: {}
     });
 
+    redirectChangePasswordPage = () => history.push({
+        pathname: `/changepassword`,
+        hash: "#",
+        search: '',
+        state: {}
+    });
+
     render() {
         let content = (<SpinnerLoading />);
         if (this.props.profile) {
@@ -131,7 +136,8 @@ class ProfilePage extends Component {
                             <div className="card-header col-md-12 mb-12">
                                 <div className="card-title  col-md-12 mb-12">
                                     My Profile
-                                    <Button style={{ float: 'right' }} variant="outline-primary" onClick={() => this.redirectProfilePage()} title="Edit My Prpfile"> <PencilSquare /> </Button>
+                                    <Button style={{ float: 'right' }} variant="outline-primary" className="m-1" onClick={() => this.redirectProfilePage()} title="Edit My Prpfile"> <PencilSquare /> </Button>
+                                    <Button style={{ float: 'right' }} variant="outline-primary" className="m-1" onClick={() => this.redirectChangePasswordPage()} title="Change Password"> <LockFill /> </Button>
                                 </div>
                             </div>
                             <div className="card mt-3">
@@ -189,36 +195,20 @@ class ProfilePage extends Component {
                                                             <tr key="mobile_no">
                                                                 <td key="mob_label"><h6 className="mb-0">Mobile No.</h6></td>
                                                                 <td key="mob_data">
-                                                                    {
-                                                                        SITE_SETTING.settings.contact_details_verify && profile.mobile_no_verified === 'N' ?
-                                                                            <InlineVerfiy field_name="mobile_no" field_value={profile.mobile_no} is_verified={this.state.is_mobile_verified}
-                                                                                callback={(contact_details) => this.sendOtp('mobile_no', contact_details)} max_length="10"
-                                                                                updateCallback={(contact_details, otp) => this.updateData('mobile_no', contact_details, otp)}
-                                                                            /> : <div>
-                                                                                <span className="text-secondary">{profile.mobile_no}</span>
-                                                                                {profile.mobile_no_verified === 'Y' && <span className='text-success'>
-                                                                                    <i className='fe fe-user-check ml-2'></i>
-                                                                                </span>}
-                                                                            </div>
-                                                                    }
-
+                                                                    <span className="text-secondary">{profile.mobile_no}</span>
+                                                                    {profile.mobile_no_verified === 'Y' && <span className='text-success'>
+                                                                        <i className='fe fe-user-check ml-2'></i>
+                                                                    </span>}
                                                                 </td>
                                                             </tr>
                                                             <tr key="email">
                                                                 <td key="email_label"><h6 className="mb-0">Email</h6></td>
                                                                 <td key="email_data">
-                                                                    {
-                                                                        SITE_SETTING.settings.contact_details_verify && profile.email_verified === 'N' ?
-                                                                            <InlineVerfiy field_name="email" field_value={profile.email} is_verified={this.state.is_email_verified}
-                                                                                callback={(contact_details) => this.sendOtp('email', contact_details)} max_length="100"
-                                                                                updateCallback={(contact_details, otp) => this.updateData('email', contact_details, otp)}
-                                                                            /> : <div>
-                                                                                <span className="text-secondary">{profile.email}</span>
-                                                                                {profile.email_verified === 'Y' && <span className='text-success'>
-                                                                                    <i className='fe fe-user-check ml-2'></i>
-                                                                                </span>}
-                                                                            </div>
-                                                                    }
+                                                                    <span className="text-secondary">{profile.email}</span>
+                                                                    {profile.email_verified === 'Y' && <span className='text-success'>
+                                                                        <i className='fe fe-user-check ml-2'></i>
+                                                                    </span>}
+
                                                                 </td>
                                                             </tr>
                                                             <tr key="address">

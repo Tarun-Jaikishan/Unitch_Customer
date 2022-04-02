@@ -28,10 +28,11 @@ export const logout = () => {
 
 export const authFail = (error) => {
     let message = "";
-    for (const property in error) {
-        message = `${message} ${error[property].join(' ')}.`;
+    for (const property in error.data.message) {
+        message = `${message} ${error.data.message[property].join(' ')}.`;
+       //console.log("Error message", error[property]);
     }
-    console.log("Error message", error);
+    console.log("Error message", message);
     return {
         type: actionType.AUTH_FAIL,
         error: message
@@ -54,7 +55,7 @@ export const autoLogin = () => {
                     setToken(response, dispatch);
                 }).catch(err => {
                     if (err.response) {
-                        dispatch(authFail(err.response.data.message));
+                        dispatch(authFail(err.response.data));
                     }
                 });
         }
@@ -69,7 +70,8 @@ const setToken = (response, dispatch) => {
         username: data.username,
         email: data.email,
         mobile_no: data.mobile_no,
-        is_customer: true
+        is_customer: true,
+        force_reset_password: data.force_reset_password
     };
     // console.log("Set token called", user_data, data.access_token, [USER_TOKEN, USER_DETAILS_STORAGE])
     localStorage.setItem(USER_TOKEN, JSON.stringify({ token: data.access_token, time: new Date() }));
@@ -101,7 +103,7 @@ export const auth = (username = '', password = '', isUserSignin = false) => {
                 })
                 .catch(err => {
                     if (err) {
-                        dispatch(authFail(err));
+                        dispatch(authFail(err.response.data));
                     }
                 })
         } else {
