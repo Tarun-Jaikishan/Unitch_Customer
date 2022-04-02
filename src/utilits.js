@@ -98,4 +98,3 @@ export const getBase64 = (file, cb) => {
         console.log('Error: ', error);
     };
 }
-

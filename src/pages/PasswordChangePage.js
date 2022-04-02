@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as action from '../redux/action/index';
 import SpinnerLoading from '../components/Spinner';
-import { API_SETTING, USER_TOKEN } from '../env.conf';
+import { API_SETTING, USER_TOKEN, SITE_SETTING } from '../env.conf';
 import { api } from '../axios';
 import OtpVerificationModal from '../components/OtpVerificationModal';
 
@@ -17,7 +17,7 @@ class ChangePassword extends Component {
         this.state = {
             form: {
                 email: {
-                    required: true,
+                    required: SITE_SETTING.settings.enable_email_verification,
                     value: props.profile.email,
                     validation: isEmail,
                     errorMsg: null
@@ -174,7 +174,7 @@ class ChangePassword extends Component {
                                                                     </Form.Group>
                                                                 </td>
                                                             </tr>
-                                                            <tr key="email">
+                                                            {SITE_SETTING.settings.enable_email_verification && <tr key="email">
                                                                 <td key="email_label">
                                                                     <Form.Group controlId="email_controlId">
                                                                         <Form.Label>Email</Form.Label>
@@ -188,7 +188,7 @@ class ChangePassword extends Component {
                                                                         </div>
                                                                     </Form.Group>
                                                                 </td>
-                                                            </tr>
+                                                            </tr>}
                                                             <tr key="password">
                                                                 <td key="password_label">
                                                                     <Form.Group controlId="password_controlId">

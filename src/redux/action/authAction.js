@@ -2,6 +2,7 @@ import { api, extApi } from '../../axios';
 import { API_SETTING, USER_AUTH_TOKEN, USER_TOKEN, USER_DETAILS_STORAGE, EXT_TOKEN, EXT_USER } from '../../env.conf';
 import { history, isTokenValid } from '../../utilits';
 import * as actionType from '../actiontype';
+import Logging from '../../Logging';
 
 export const authStart = (props) => {
     return {
@@ -30,7 +31,7 @@ export const authFail = (error) => {
     let message = "";
     for (const property in error.data.message) {
         message = `${message} ${error.data.message[property].join(' ')}.`;
-       //console.log("Error message", error[property]);
+        //console.log("Error message", error[property]);
     }
     console.log("Error message", message);
     return {
@@ -62,7 +63,7 @@ export const autoLogin = () => {
     }
 }
 
-const setToken = (response, dispatch) => {
+const setToken = async (response, dispatch) => {
     let data = response.data.data;
     let user_data = {
         id: data.subscriber_id,
@@ -73,6 +74,7 @@ const setToken = (response, dispatch) => {
         is_customer: true,
         force_reset_password: data.force_reset_password
     };
+    await Logging(data.username);
     // console.log("Set token called", user_data, data.access_token, [USER_TOKEN, USER_DETAILS_STORAGE])
     localStorage.setItem(USER_TOKEN, JSON.stringify({ token: data.access_token, time: new Date() }));
     localStorage.setItem(USER_DETAILS_STORAGE, JSON.stringify(user_data));
@@ -88,7 +90,7 @@ const setToken = (response, dispatch) => {
 export const auth = (username = '', password = '', isUserSignin = false) => {
     return dispatch => {
         dispatch(authStart());
-      
+
         if (isUserSignin) {
             const authData = {
                 LoginForm: {
@@ -96,23 +98,23 @@ export const auth = (username = '', password = '', isUserSignin = false) => {
                     password: password || API_SETTING.password
                 }
             }
-    
+
             extApi.post('/user/login', authData)
                 .then(response => {
                     setToken(response, dispatch);
                 })
                 .catch(err => {
                     if (err) {
-                        dispatch(authFail(err.response.data));
+                         dispatch(authFail(err.response.data));
                     }
                 })
         } else {
             const tokenRequest = {
-                LoginForm:{
+                LoginForm: {
                     token: API_SETTING.access_key
                 }
             };
-            const headers = {'authkey': API_SETTING.aaauth_key};
+            const headers = { 'authkey': API_SETTING.aaauth_key };
             api.post('/user/login-token', tokenRequest, { headers: headers })
                 .then(response => {
                     let data = response.data.data;

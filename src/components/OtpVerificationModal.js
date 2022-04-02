@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Container, Alert, Col, Row } from 'react-bootstrap';
 import { isNumeric, isTokenValid, history } from '../utilits';
-import { API_SETTING, USER_TOKEN } from '../env.conf';
+import { API_SETTING, USER_TOKEN, SITE_SETTING } from '../env.conf';
 import { api } from '../axios';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as action from '../redux/action/index';
 
@@ -14,7 +14,7 @@ class OtpVerificationModal extends Component {
         this.state = {
             form: {
                 email_otp: {
-                    required: true,
+                    required: SITE_SETTING.settings.enable_email_verification,
                     value: "",
                     validation: isNumeric,
                     errorMsg: null
@@ -28,7 +28,7 @@ class OtpVerificationModal extends Component {
             },
             message: "",
             modal_show: false,
-            savingdate: false
+            savingdata: false
         }
     }
 
@@ -67,9 +67,14 @@ class OtpVerificationModal extends Component {
         return isvalid;
     }
 
+    handleClose = () => {
+        this.setState({ savingdata: false });
+        this.props.handleClose();
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({ savingdate: true });
+        this.setState({ savingdata: true });
 
         if (this.isFormValid()) {
             const form = {
@@ -85,7 +90,7 @@ class OtpVerificationModal extends Component {
             }
             this.verifyOtp(formData);
         } else {
-            this.setState({ savingdate: false });
+            this.setState({ savingdata: false });
         }
     }
 
@@ -112,7 +117,7 @@ class OtpVerificationModal extends Component {
                                 search: '?=1',
                                 state: { message: resp.data.data.message }
                             });
-                            this.props.handleClose();
+                            this.handleClose();
                             return {
                                 status: resp.data.data.success,
                                 message: resp.data.data.message
@@ -122,6 +127,7 @@ class OtpVerificationModal extends Component {
                 }).catch(error => {
                     if (error.response) {
                         this.setState({
+                            savingdata: false,
                             message: error.response.data.data.message.message
                         });
                     }
@@ -147,7 +153,7 @@ class OtpVerificationModal extends Component {
         );
         return (
             <>
-                <Modal show={this.props.modalshow} onHide={this.props.handleClose}>
+                <Modal show={this.props.modalshow} onHide={this.handleClose}>
                     <Form onSubmit={this.handleSubmit} >
                         <Modal.Header closeButton>
                             <Modal.Title>Verify OTP</Modal.Title>
@@ -160,7 +166,7 @@ class OtpVerificationModal extends Component {
                                     </Alert>
                                 }
                                 <Row>
-                                    <Col xs={12} md={8}>
+                                    {SITE_SETTING.settings.enable_email_verification && <Col xs={12} md={8}>
                                         <Form.Group controlId="email_id">
                                             <Form.Label>Email OTP</Form.Label>
                                             <Form.Control className="input-sm" type="text" name="email_otp"
@@ -170,7 +176,7 @@ class OtpVerificationModal extends Component {
                                                 <p className="text-danger">{this.state.form.email_otp.errorMsg}</p>
                                             )}
                                         </Form.Group>
-                                    </Col>
+                                    </Col>}
                                     <Col xs={12} md={8}>
                                         <Col xs={12} md={8}>
                                             <Form.Group controlId="mobile_id">
@@ -189,11 +195,11 @@ class OtpVerificationModal extends Component {
 
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={this.props.handleClose}>
+                            <Button variant="secondary" onClick={this.handleClose}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={this.handleSubmit} disabled={this.state.savingdate}>
-                                {this.state.savingdate ? "Saving data..." : "Save Changes"}
+                            <Button variant="primary" onClick={this.handleSubmit} disabled={this.state.savingdata}>
+                                {this.state.savingdata ? "Saving data..." : "Save Changes"}
                             </Button>
                         </Modal.Footer>
                     </Form>

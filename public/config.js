@@ -15,7 +15,8 @@ var Configs = {
     settings: {
         plan_channel_count: false,
         plan_details: false,
-        contact_details_verify: true
+        contact_details_verify: true,
+        enable_email_verification:false
     },
     DASHBOARD_CAROUSEL: [
         {
