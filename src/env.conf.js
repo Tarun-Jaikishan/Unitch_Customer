@@ -1,21 +1,22 @@
+import configData from './config.json';
 
 export const SITE_SETTING = {
-    company_name: window.Configs.COMPANY_NAME,
-    company_address: window.Configs.COMPANY_ADDRESS,
-    company_contact: { crm: window.Configs.CRM_MOBILE_NO, supp: window.Configs.CRM_SUPPORT_NO },
-    company_email: window.Configs.SUPPORT_EMAIL,
-    company_logo: window.Configs.COMPANY_LOGO,
-    settings: window.Configs.settings,
-    dashboard_carousel: window.Configs.DASHBOARD_CAROUSEL
+    company_name: configData.COMPANY_NAME,
+    company_address: configData.COMPANY_ADDRESS,
+    company_contact: { crm: configData.CRM_MOBILE_NO, supp: configData.CRM_SUPPORT_NO },
+    company_email: configData.SUPPORT_EMAIL,
+    company_logo: configData.COMPANY_LOGO,
+    settings: configData.settings,
+    dashboard_carousel: configData.DASHBOARD_CAROUSEL
 };
 
 
 export const API_SETTING = {
-    url: window.Configs.API_URL,
-    front_url: window.Configs.FRONT_URL,
-    authkey: window.Configs.AUTH_KEY,
-    access_key: window.Configs.ACCESS_KEY,
-    aaauth_key: window.Configs.AAUTH_KEY
+    url: configData.API_URL,
+    front_url: configData.FRONT_URL,
+    authkey: configData.AUTH_KEY,
+    access_key: configData.ACCESS_KEY,
+    aaauth_key: configData.AAUTH_KEY
 }
 
 export const BOUQUET_BASE = 1;
@@ -30,5 +31,5 @@ export const USER_TOKEN = "user_token";
 export const USER_DETAILS_STORAGE = "user";
 export const EXT_TOKEN = "ext_token";
 export const EXT_USER = "ext_user";
-export const PAYMENT_URL = window.Configs.ONLINE_PAYMENT_URL;
-export const BACKURL = window.Configs.PAYMENT_RETURN_URL;
+export const PAYMENT_URL = configData.ONLINE_PAYMENT_URL;
+export const BACKURL = configData.PAYMENT_RETURN_URL;

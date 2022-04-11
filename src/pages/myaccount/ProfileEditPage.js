@@ -620,7 +620,7 @@ class ProfileEdit extends Component {
                                                 </div>
                                             </div>
                                         </Col>
-                                        <Col xs={12} md={12} lg={12} className='text-center'>
+                                        <Col xs={12} md={12} lg={12} className='text-center mb-5'>
                                             <Button variant="primary" type="submit"
                                                 disabled={this.state.is_button_loading} >
                                                 {this.state.is_button_loading ? "Processing..." : "Submit"}

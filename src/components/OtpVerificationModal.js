@@ -155,7 +155,7 @@ class OtpVerificationModal extends Component {
             <>
                 <Modal show={this.props.modalshow} onHide={this.handleClose}>
                     <Form onSubmit={this.handleSubmit} >
-                        <Modal.Header closeButton>
+                        <Modal.Header closeButton={true} aria-label={"Close"}>
                             <Modal.Title>Verify OTP</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="show-grid">
