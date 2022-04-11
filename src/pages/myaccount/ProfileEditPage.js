@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col, Table } from 'react-bootstrap';
-import { isString, isEmail, isNumeric, isaDate, isAlphaNumeric, isNumericGTZero, isTokenValid, history, getBase64 } from '../../utilits';
+import { isString, isEmail, isNumeric, isaDate, isAlphaNumeric, isNumericGTZero, isTokenValid, history, getBase64, showErrorMessage } from '../../utilits';
 import { Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as action from '../../redux/action/index';
@@ -167,13 +167,10 @@ class ProfileEdit extends Component {
         await this.props.fetchAccounts();
         if (Object.keys(this.props.profile).length > 0) {
             var forms = { ...this.state.form };
-            console.log("all forms datata", forms);
             for (var fields in this.props.profile) {
                 if (fields !== "address" && fields !== 'billing_address') {
-                    console.log(fields, this.props.profile[fields]);
                     if (forms[fields] !== undefined && Object.keys(forms[fields]).length > 0) {
                         forms[fields].value = this.props.profile[fields];
-                        console.log(forms[fields].value);
                     }
                 }
                 if (fields === "gender") {
@@ -240,12 +237,10 @@ class ProfileEdit extends Component {
             if (forms[field].required && forms[field].value.length === 0) {
                 forms[field].errorMsg = "Field required,cannot be empty.";
                 isvalid = isvalid && false;
-                console.log(field, isvalid, 'required');
             }
             if (typeof forms[field].validation === 'function' && forms[field].value !== null && forms[field].value.length > 0) {
                 forms[field].errorMsg = !forms[field].validation(forms[field].value) ? " Invalid data." : "";
                 isvalid = isvalid && forms[field].validation(forms[field].value);
-                console.log(field, isvalid, 'function');
             }
         }
 
@@ -256,7 +251,6 @@ class ProfileEdit extends Component {
                 }
             });
         }
-        console.log("is form valid", isvalid);
         return isvalid;
     }
 
@@ -278,7 +272,6 @@ class ProfileEdit extends Component {
                     formData[field] = frm[field].value;
                 }
             }
-            console.log('form validation output==>', formData);
             this.setState({
                 formData: formData
             })
@@ -302,7 +295,6 @@ class ProfileEdit extends Component {
             }
             return await api.post(url, request, { headers })
                 .then(resp => {
-                    console.log('sent otp resp', resp.data.data);
                     if (resp.data.success) {
                         this.setState({
                             modalshow: true,
@@ -311,9 +303,17 @@ class ProfileEdit extends Component {
                             status: resp.data.data.success,
                             message: resp.data.data.message
                         };
+                    }else{
+                        console.log("Error response",resp.data);
                     }
                 }).catch(err => {
-                    console.log(err);
+                    let message = showErrorMessage(err.response.data);
+                    let form = { ...this.state.form };
+                    form.mobile_no.errorMsg = message;
+                    this.setState({
+                        is_button_loading: false,
+                        form: { ...form }
+                    });
                 });
         }
     }
@@ -329,7 +329,6 @@ class ProfileEdit extends Component {
                         this.setState({
                             modalshow: false,
                         });
-                        console.log("Profile save response", resp.data.success);
                         history.push({
                             pathname: '/profile',
                             hash: "#",

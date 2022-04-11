@@ -98,3 +98,12 @@ export const getBase64 = (file, cb) => {
         console.log('Error: ', error);
     };
 }
+
+export const showErrorMessage = (error) => {
+    let message='';
+    for (const property in error.data.message) {
+        message = `${message} ${error.data.message[property].join(' ')}.`;
+        //console.log("Error message", error[property]);
+    }
+    return message;
+}
