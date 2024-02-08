@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Card from "react-bootstrap/Card";
-import "./styles.scss";
+import "./styles.css";
 import DvDQuality from "../../resouces/images/front/dvd_quality.png";
 import ChannelSelection from "../../resouces/images/front/channel_selection.png";
 import ElectronicGuide from "../../resouces/images/front/electronic_guide.png";
