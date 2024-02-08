@@ -35,7 +35,7 @@ var Configs = {
             title: "Redefine TV Experience",
             caption: "Redefine TV Experience",
             description: "Watch all favourite contents in HD",
-            imageUrl: './images/front/slider2.jpg',
+            imageUrl: './images/front/slider1.jpg',
             style: {}
         }
     ]
