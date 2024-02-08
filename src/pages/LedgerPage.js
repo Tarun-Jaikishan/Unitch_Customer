@@ -115,7 +115,7 @@ class LedgerPage extends Component {
                   <th className="text-center">Amount</th>
                   <th className="text-center">Tax</th>
                   <th className="text-center">Total</th>
-                  <th className="text-center"></th>
+                  <th className="text-center">Download</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,9 +139,9 @@ class LedgerPage extends Component {
                       </td>
                       <td className="text-center">
                         {item.note_lbl === "Cr" && (
-                          <Link to={{ pathname: url }} target="_blank">
+                          <a href={url} target="_blank">
                             <FileEarmark />
-                          </Link>
+                          </a>
                         )}
                       </td>
                     </tr>

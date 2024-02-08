@@ -3030,6 +3030,21 @@ fieldset:disabled a.btn {
   border-color: #868e96;
 }
 
+
+/* Purple */
+.btn-outline-purple {
+  color: var(--purple);
+  background-color: transparent;
+  background-image: none;
+  border-color: var(--purple);
+}
+
+.btn-outline-purple:hover {
+  color: #fff;
+  background-color: var(--purple);
+  border-color: var(--purple);
+}
+
 .btn-outline-secondary:focus,
 .btn-outline-secondary.focus {
   box-shadow: 0 0 0 2px rgba(134, 142, 150, 0.5);
@@ -11133,7 +11148,6 @@ body.fixed-header .header {
 
 .header-brand {
   color: inherit;
-  margin-right: 1rem;
   font-size: 1.25rem;
   white-space: nowrap;
   font-weight: 600;
@@ -11152,7 +11166,6 @@ body.fixed-header .header {
   height: 2rem;
   line-height: 2rem;
   vertical-align: bottom;
-  margin-right: 0.5rem;
   width: auto;
 }
 
@@ -13279,7 +13292,7 @@ a.icon:hover {
 
 .btn-purple {
   color: #fff;
-  background-color: #a55eea;
+  background-color: #923ce6;
   border-color: #a55eea;
 }
 

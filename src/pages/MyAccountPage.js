@@ -32,6 +32,8 @@ class MyAccountPage extends Component {
       api
         .get(url, { headers: headers })
         .then((resp) => {
+          console.log("s");
+          console.log(resp.data.data);
           const d = resp.data.data;
           const banners = [];
           for (let b in d) {

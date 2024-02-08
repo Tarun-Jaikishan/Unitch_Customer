@@ -81,7 +81,7 @@ class PeriodSelectionPage extends Component {
               if (err.response.status === 422) {
                 this.setState({
                   is_error: true,
-                  error_message: err.response.data.data.message.join(" "),
+                  error_message: err.response.data.data.message,
                 });
               }
             }

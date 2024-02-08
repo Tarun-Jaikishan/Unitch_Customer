@@ -6,11 +6,11 @@
   "COMPANY_LOGO": "https://manage.bheem.tv/img/clientlogo.png",
   "SUPPORT_EMAIL": "bcndigital@bcndigitaltv.com",
   "API_URL": "https://manage.bheem.tv/api/index.php/v1/",
-  "FRONT_URL": "http://sms.front.local/printcustomercollectionreceipt/",
+  "FRONT_URL": "https://manage.bheem.tv/printcustomercollectionreceipt/",
   "AUTH_KEY": "xqibzknznwb29de15s44",
   "ACCESS_KEY": "eWZaUDBSLVk0d3lJaHdkbWdkTUtFc0toclMwZXhlUGl8Mg==",
   "AAUTH_KEY": "ivt5y01iwq75sysm7ol7",
-  "ONLINE_PAYMENT_URL": "https://manage.bheem.tv/portal/?r=/portal/online-pay/checkout",
+  "ONLINE_PAYMENT_URL": "https://manage.bheem.tv/portal/index.php?r=/portal/online-pay/checkout",
   "PAYMENT_RETURN_URL": "https://manage.bheem.tv/portals/#/myaccount",
   "settings": {
     "plan_channel_count": false,
@@ -23,7 +23,7 @@
       "title": "BHEEM TV CUSTOMER PORTAL",
       "caption": "ONE APP FOR ALL",
       "description": "Renew Subscription | Add Channels | Raise Complaint",
-      "imageUrl": "./images/front/slider1.jpg",
+      "imageUrl": "./images/front/slider2.jpg",
       "style": {
         "top": "48%",
         "left": 0,
@@ -35,7 +35,7 @@
       "title": "Redefine TV Experience",
       "caption": "Redefine TV Experience",
       "description": "Watch all favourite contents in HD",
-      "imageUrl": "./images/front/slider1.jpg",
+      "imageUrl": "./images/front/slider2.jpg",
       "style": {}
     }
   ],

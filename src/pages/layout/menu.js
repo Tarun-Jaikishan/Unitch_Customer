@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import HomePage from "../HomePage";
 import PlanPage from "../PlanPage";
-import { PersonCircle } from "react-bootstrap-icons";
+import { PersonCircle, PersonCheckFill } from "react-bootstrap-icons";
 
 export const MENU_LIST = {
   non_login: [
@@ -26,7 +26,7 @@ const Menu = (props) => {
             exact
             activeClassName="active"
           >
-            <PersonCircle size={18} />
+            <PersonCheckFill size={18} />
             <span className="ml-2"></span> My Account
           </NavLink>
         </li>
