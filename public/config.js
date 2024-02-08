@@ -1,17 +1,17 @@
 var Configs = {
-    COMPANY_NAME: "FASTWAY TRANSMISSIONS PRIVATE LIMITED",
-    COMPANY_ADDRESS: "Grand Walk Mall, 5th Floor, Opp. Gurdev Hospital,Ferozpur Road,Ludhiana- 141002",
-    CRM_MOBILE_NO: "92170-92170",
-    CRM_SUPPORT_NO: "1800-1026-602",
-    COMPANY_LOGO: "https://fwprepaid.myfastway.in/img/clientlogo.png",
-    SUPPORT_EMAIL: "customercare@fastway.in",
-    API_URL: 'https://fwprepaid.myfastway.in/api/index.php/v1/',
+    COMPANY_NAME: "The Bhimavaram Community Network",
+    COMPANY_ADDRESS: "24-4-11, Kallakuri vari street, Sreerampuram, Bhimavaram.. WG district, AP - 534202",
+    CRM_MOBILE_NO: "9866668468",
+    CRM_SUPPORT_NO: "9515157788",
+    COMPANY_LOGO: "https://manage.bheem.tv/img/clientlogo.png",
+    SUPPORT_EMAIL: "bcndigital@bcndigitaltv.com",
+    API_URL: 'https://manage.bheem.tv/api/index.php/v1/',
     FRONT_URL: 'http://sms.front.local/printcustomercollectionreceipt/',
     AUTH_KEY: 'xqibzknznwb29de15s44',
     ACCESS_KEY: 'eWZaUDBSLVk0d3lJaHdkbWdkTUtFc0toclMwZXhlUGl8Mg==',
     AAUTH_KEY: "ivt5y01iwq75sysm7ol7",
-    ONLINE_PAYMENT_URL: "http://sms.front.local/portal/?r=/portal/online-pay/checkout",
-    PAYMENT_RETURN_URL: "https://sms.front.local/portals/#/myaccount",
+    ONLINE_PAYMENT_URL: "https://manage.bheem.tv/portal/?r=/portal/online-pay/checkout",
+    PAYMENT_RETURN_URL: "https://manage.bheem.tv/portals/#/myaccount",
     settings: {
         plan_channel_count: false,
         plan_details: false,
@@ -20,7 +20,7 @@ var Configs = {
     },
     DASHBOARD_CAROUSEL: [
         {
-            title: "EFFICIENCE APP",
+            title: "BHEEM TV CUSTOMER PORTAL",
             caption: "ONE APP FOR ALL",
             description: "Renew Subscription | Add Channels | Raise Complaint",
             imageUrl: './images/front/slider1.jpg',
@@ -35,7 +35,7 @@ var Configs = {
             title: "Redefine TV Experience",
             caption: "Redefine TV Experience",
             description: "Watch all favourite contents in HD",
-            imageUrl: './images/front/slider2.jpg',
+            imageUrl: './images/front/slider1.jpg',
             style: {}
         }
     ]

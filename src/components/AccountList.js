@@ -1,81 +1,167 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
-import BouquetList from '../components/BouquetList';
-import { history } from '../utilits';
+import React from "react";
+import { Button } from "react-bootstrap";
+import BouquetList from "../components/BouquetList";
+import { history } from "../utilits";
 
 const AccountList = ({ index, account, pygt }) => {
+  const bouquet_ids = account.bouque.map((item) => item.bouque_id);
+  return (
+    <div className="card p-5">
+      <div className="d-flex justify-content-between align-items-center flex-gap">
+        <div className="text-xl d-none d-lg-block ">Account {index + 1}</div>
+        <div className="font-weight-bolder text-lg d-lg-none ">
+          Account {index + 1}
+        </div>
+        <div className="d-flex flex-gap flex-wrap">
+          {pygt !== 2 && (
+            <button
+              className="btn btn-outline-purple flex-grow-1"
+              onClick={() =>
+                history.push({
+                  pathname: `/myaccount/renewal/${account.id}/${bouquet_ids}`,
+                  hash: "#",
+                  search: "",
+                  state: { bouquet_ids: bouquet_ids, account_id: account.id },
+                })
+              }
+            >
+              Renew
+            </button>
+          )}
+          {pygt !== 2 && account.status !== -2 && (
+            <button
+              className="btn btn-outline-purple flex-grow-1"
+              onClick={() =>
+                history.push({
+                  pathname: `/myaccount/addons/${account.id}`,
+                  hash: "#",
+                  search: "",
+                  state: { account_id: account.id },
+                })
+              }
+            >
+              Addons
+            </button>
+          )}
+          <button
+            className="btn btn-outline-purple flex-grow-1"
+            onClick={() =>
+              history.push({
+                pathname: `/myaccount/tickets/${account.id}`,
+                hash: "#",
+                search: "",
+                state: { account_id: account.id },
+              })
+            }
+          >
+            Tickets
+          </button>
+          <button
+            className="btn btn-outline-purple flex-grow-1"
+            onClick={() =>
+              history.push({
+                pathname: `/myaccount/ledger/${account.id}/${account.smartcardno}/${account.stbno}`,
+                hash: "#",
+                search: "",
+                state: {
+                  account_id: account.id,
+                  smartcardno: account.smartcardno,
+                  stbno: account.stbno,
+                },
+              })
+            }
+          >
+            Ledger
+          </button>
+        </div>
+      </div>
+      <div className="mt-5">
+        <div className="table-responsive">
+          <div className="d-flex flex-gap flex-wrap">
+            <div className="d-flex flex-gap align-items-center ">
+              <div>
+                <strong>Smartcard No</strong>
+              </div>
+              <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
+                {account.smartcardno}
+              </div>
+            </div>
 
-    const bouquet_ids = account.bouque.map(item => item.bouque_id);
-    return (
-        <div className="card mt-3">
-            <div className="card-header">
-                <div className="card-title">Account {index + 1}</div>
-                <div className="btn-list text-right" style={{ width: '70%' }}>
-                    {pygt !== 2 && <Button variant="outline-primary" className="m-2" onClick={() => history.push({
-                        pathname: `/myaccount/renewal/${account.id}/${bouquet_ids}`,
-                        hash: "#",
-                        search: '',
-                        state: { bouquet_ids: bouquet_ids, account_id: account.id }
-                    })} >Renew</Button>}
-                    {pygt !== 2 && account.status !== -2 && <Button variant="outline-primary" className="pull-right m-2" onClick={() => history.push({
-                        pathname: `/myaccount/addons/${account.id}`,
-                        hash: "#",
-                        search: '',
-                        state: { account_id: account.id }
-                    })} >Addons</Button>}
-                    <Button variant="outline-primary" className="pull-right m-2" onClick={() => history.push({
-                        pathname: `/myaccount/tickets/${account.id}`,
-                        hash: "#",
-                        search: '',
-                        state: { account_id: account.id }
-                    })} >Tickets</Button>
-                    <Button variant="outline-primary" className="pull-right m-2" onClick={() => history.push({
-                        pathname: `/myaccount/ledger/${account.id}/${account.smartcardno}/${account.stbno}`,
-                        hash: "#",
-                        search: '',
-                        state: { account_id: account.id, smartcardno: account.smartcardno, stbno: account.stbno }
-                    })} >Ledger</Button>
-                </div>
+            <div className="d-flex flex-gap align-items-center ">
+              <div>
+                <strong>STB No</strong>
+              </div>
+              <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
+                {account.stbno}
+              </div>
             </div>
-            <div className="card-body">
-                <div className="table-responsive">
-                    <table className="table card-table table-striped table-vcenter">
-                        <tbody>
-                            <tr>
-                                <td><strong>Smartcard no</strong></td>
-                                <td>{account.smartcardno}</td>
-                                <td><strong>STB No</strong></td>
-                                <td>{account.stbno}</td>
-                                <td><strong>Outstanding</strong></td>
-                                <td>{account.outstanding}</td>
-                                <td><strong>Current Status</strong></td>
-                                <td>{account.status_lbl}</td>
-                            </tr>
-                            <tr>
-                                <td colSpan="8">
-                                    <table className="table  table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th><strong>Bouquet</strong></th>
-                                                <th><strong>Type</strong></th>
-                                                <th><strong>Start Date</strong></th>
-                                                <th><strong>End Date</strong></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {account.bouque.map((item, index) => (
-                                                <BouquetList item={item} index={index} key={index} />
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+
+            <div className="d-flex flex-gap align-items-center ">
+              <div>
+                <strong>Outstanding</strong>
+              </div>
+              <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
+                {account.outstanding}
+              </div>
             </div>
-        </div >
-    );
-}
+
+            <div className="d-flex flex-gap align-items-center ">
+              <div>
+                <strong>Current Status</strong>
+              </div>
+              <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
+                {account.status_lbl}
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="d-flex flex-gap flex-wrap">
+            <div className="d-flex flex-gap align-items-center ">
+              <div>
+                <strong>Activation Date</strong>
+              </div>
+              <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
+                {account.activation_date}
+              </div>
+            </div>
+
+            <div className="d-flex flex-gap align-items-center ">
+              <div>
+                <strong>Deactivation Date</strong>
+              </div>
+              <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
+                {account.activation_date}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <table className="table-hover table-bordered">
+              <tr>
+                <th className="text-center">
+                  <strong>Bouquet</strong>
+                </th>
+                <th className="text-center">
+                  <strong>Type</strong>
+                </th>
+                <th className="text-center">
+                  <strong>Start Date</strong>
+                </th>
+                <th className="text-center">
+                  <strong>End Date</strong>
+                </th>
+              </tr>
+              <>
+                {account.bouque.map((item, index) => (
+                  <BouquetList item={item} index={index} key={index} />
+                ))}
+              </>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default AccountList;

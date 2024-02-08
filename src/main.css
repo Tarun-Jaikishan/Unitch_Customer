@@ -1,0 +1,146 @@
+body{
+    background-color: rgb(246, 242, 242);
+}
+
+.flex-gap{
+    gap: 1rem;
+}
+
+.flex-gap-sm{
+    gap: .5rem;
+}
+
+
+.w-full{
+    width: 100% !important;
+}
+
+.w-half{
+    width: 50vh;
+}
+
+.w-fit{
+    width:fit-content;
+}
+
+.h-fit{
+    height:fit-content;
+}
+
+.text-xl{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.text-xxl{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.text-md{
+    /* font-size: 1rem; */
+    font-weight: bold;
+}
+
+.text-lg{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+
+/* Login Page */
+.center-div{
+    margin-top: 19vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Loading Component */
+
+.min-vh{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+th,td{
+    padding: 1rem 0.5rem;
+}
+
+
+/* Profile Page */
+
+.profile-table th{
+    padding: 1rem 0.5rem;
+    width: 100%;
+}
+
+.profile-table td{
+    padding: .75rem 0.5rem;
+}
+
+table{
+    width: 100%;
+    max-width: 100%;
+    /* margin-bottom: 1rem; */
+    background-color: transparent;
+}
+
+/* Account Page */
+.tr-hover{
+    background-color: transparent;
+}
+
+.tr-hover:hover{
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+
+
+/* Password Change Page */
+.btn-space{
+    padding: 0 2rem 1.5rem;
+}
+
+.center-change-password{
+    margin-top: 10vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Renew Account */
+
+.inner-card{
+    transition:0.3s ;
+}
+
+.inner-card:hover{
+    background-color:rgb(252, 241, 252) ;
+    cursor: pointer;
+}
+
+.inner-table th{
+        padding: 1rem 0.5rem;
+}
+
+.inner-table td{
+        padding: 0.5rem 0.5rem;
+}
+
+
+
+
+/* Footer */
+.footer-zindex{
+    z-index: 9999;
+}
+
+.footer-text-sm{
+    font-size: 0.6rem;
+}
+
+
