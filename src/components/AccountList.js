@@ -1,7 +1,13 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import BouquetList from "../components/BouquetList";
 import { history } from "../utilits";
+import {
+  PlusSquareFill,
+  FileEarmarkPlusFill,
+  PencilSquare,
+  ExclamationDiamondFill,
+  FileSpreadsheetFill,
+} from "react-bootstrap-icons";
 
 const AccountList = ({ index, account, pygt }) => {
   const bouquet_ids = account.bouque.map((item) => item.bouque_id);
@@ -15,7 +21,7 @@ const AccountList = ({ index, account, pygt }) => {
         <div className="d-flex flex-gap flex-wrap">
           {pygt !== 2 && (
             <button
-              className="btn btn-outline-purple flex-grow-1"
+              className="btn btn-outline-purple flex-grow-1 d-flex align-items-center flex-gap-sm"
               onClick={() =>
                 history.push({
                   pathname: `/myaccount/renewal/${account.id}/${bouquet_ids}`,
@@ -25,12 +31,12 @@ const AccountList = ({ index, account, pygt }) => {
                 })
               }
             >
-              Renew
+              <PlusSquareFill /> Renew
             </button>
           )}
           {pygt !== 2 && account.status !== -2 && (
             <button
-              className="btn btn-outline-purple flex-grow-1"
+              className="btn btn-outline-purple flex-grow-1 d-flex align-items-center flex-gap-sm"
               onClick={() =>
                 history.push({
                   pathname: `/myaccount/addons/${account.id}`,
@@ -40,11 +46,11 @@ const AccountList = ({ index, account, pygt }) => {
                 })
               }
             >
-              Addons
+              <FileEarmarkPlusFill /> Addons
             </button>
           )}
           <button
-            className="btn btn-outline-purple flex-grow-1"
+            className="btn btn-outline-purple flex-grow-1 d-flex align-items-center flex-gap-sm"
             onClick={() =>
               history.push({
                 pathname: `/myaccount/tickets/${account.id}`,
@@ -54,10 +60,10 @@ const AccountList = ({ index, account, pygt }) => {
               })
             }
           >
-            Tickets
+            <ExclamationDiamondFill /> Tickets
           </button>
           <button
-            className="btn btn-outline-purple flex-grow-1"
+            className="btn btn-outline-purple flex-grow-1 d-flex align-items-center flex-gap-sm"
             onClick={() =>
               history.push({
                 pathname: `/myaccount/ledger/${account.id}/${account.smartcardno}/${account.stbno}`,
@@ -71,7 +77,7 @@ const AccountList = ({ index, account, pygt }) => {
               })
             }
           >
-            Ledger
+            <FileSpreadsheetFill /> Ledger
           </button>
         </div>
       </div>
