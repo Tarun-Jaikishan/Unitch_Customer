@@ -66,6 +66,7 @@ class MyAccountPage extends Component {
           <div className="w-full">
             <AccountPage
               accounts={this.props.accounts}
+              profile={this.props.profile}
               pygt={this.props.pygt}
               banners={this.state.adv_banner}
             />

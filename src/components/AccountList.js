@@ -9,7 +9,8 @@ import {
   FileSpreadsheetFill,
 } from "react-bootstrap-icons";
 
-const AccountList = ({ index, account, pygt }) => {
+const AccountList = ({ index, account, pygt, profile }) => {
+  console.log(profile);
   const bouquet_ids = account.bouque.map((item) => item.bouque_id);
   return (
     <div className="w-full">
@@ -85,16 +86,18 @@ const AccountList = ({ index, account, pygt }) => {
       <div className="card p-5">
         <div className="mt-5">
           <div className="table-responsive">
-            <div className="d-flex flex-gap">
-              {/* <div className="border rounded-lg p-3">
-                <u className="font-weight-bolder">Subscriber Information</u>
+            <div className="d-lg-flex flex-gap">
+              <fieldset className="border rounded-lg p-3">
+                <legend className="font-weight-bolder text-lg w-fit px-2">
+                  Subscriber Information
+                </legend>
                 <div className="mt-2 d-flex flex-gap align-items-center">
                   <div className="d-flex flex-gap align-items-center ">
                     <div>
                       <strong>Customer Name</strong>
                     </div>
                     <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
-                      {account.status_lbl}
+                      {profile.name}
                     </div>
                   </div>
 
@@ -103,19 +106,20 @@ const AccountList = ({ index, account, pygt }) => {
                       <strong>Customer ID</strong>
                     </div>
                     <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
-                      {account.activation_date}
+                      {profile.customer_id}
                     </div>
                   </div>
                 </div>
                 <br />
-                <div className="mt-2 d-flex flex-gap align-items-center">
+                <div className="mt-2 d-flex flex-gap align-items-center h-fit">
                   {" "}
                   <div className="d-flex flex-gap align-items-center ">
                     <div>
                       <strong>Billing Address / Pincode</strong>
                     </div>
                     <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
-                      {account.activation_date}
+                      {profile.billing_address.addr} /{" "}
+                      {profile.billing_address.pincode}
                     </div>
                   </div>
                   <div className="d-flex flex-gap align-items-center ">
@@ -123,15 +127,18 @@ const AccountList = ({ index, account, pygt }) => {
                       <strong>Mobile Number</strong>
                     </div>
                     <div className="px-2 py-1 bg-purple text-white font-weight-bolder rounded-lg">
-                      {account.activation_date}
+                      {profile.mobile_no}
                     </div>
                   </div>
                 </div>
-              </div> */}
+              </fieldset>
+              <br />
 
-              <div className="border rounded-lg p-3">
-                <u className="font-weight-bolder">Box Information</u>
-                <div className="mt-2 d-flex flex-gap align-items-center">
+              <fieldset className="border rounded-lg p-3">
+                <legend className="font-weight-bolder text-lg w-fit px-2">
+                  Box Information
+                </legend>
+                <div className="mt-2 d-lg-flex flex-gap align-items-center">
                   <div className="d-flex flex-gap align-items-center ">
                     <div>
                       <strong>Smartcard No</strong>
@@ -140,6 +147,8 @@ const AccountList = ({ index, account, pygt }) => {
                       {account.smartcardno}
                     </div>
                   </div>
+
+                  <br />
 
                   <div className="d-flex flex-gap align-items-center ">
                     <div>
@@ -150,13 +159,15 @@ const AccountList = ({ index, account, pygt }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
 
             <br />
 
-            <div className="border rounded-lg p-3">
-              <u className="font-weight-bolder">Digital Information</u>
+            <fieldset className="border rounded-lg p-3">
+              <legend className="font-weight-bolder text-lg w-fit px-2">
+                Digital Information
+              </legend>
               <div className="mt-2 d-flex flex-gap align-items-center">
                 <div className="d-flex flex-gap align-items-center ">
                   <div>
@@ -185,7 +196,7 @@ const AccountList = ({ index, account, pygt }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </fieldset>
             <br />
           </div>
 
