@@ -23,19 +23,21 @@
       "title": "BHEEM TV CUSTOMER PORTAL",
       "caption": "ONE APP FOR ALL",
       "description": "Renew Subscription | Add Channels | Raise Complaint",
-      "imageUrl": "./images/front/slider2.jpg",
-      "style": {
-        "top": "48%",
-        "left": 0,
-        "right": "auto",
-        "width": "40%"
-      }
+      "imageUrl": "./images/front/slider1.jpg",
+      "style": {}
     },
     {
       "title": "Redefine TV Experience",
       "caption": "Redefine TV Experience",
       "description": "Watch all favourite contents in HD",
       "imageUrl": "./images/front/slider2.jpg",
+      "style": {}
+    },
+    {
+      "title": "Redefine TV Experience",
+      "caption": "Redefine TV Experience",
+      "description": "Watch all favourite contents in HD",
+      "imageUrl": "./images/front/slider3.jpg",
       "style": {}
     }
   ],
